@@ -13,6 +13,18 @@
     <ion-label floating>E-mail</ion-label>
     <ion-input [(ngModel)]="email"  type="email" value=""></ion-input>
   </ion-item>
+  <ion-item>
+    <ion-label floating>Name</ion-label>
+    <ion-input [(ngModel)]="name"  type="text" value=""></ion-input>
+  </ion-item>
+  <br>
+  <ion-item>
+    <ion-label floating>Favorite Parking Lot</ion-label>
+        <ion-select [(ngModel)]="parkingLot">
+            <ion-option value="binkley" selected="true">Binkley</ion-option>
+            <ion-option value="airline">Airline</ion-option>
+        </ion-select>
+    </ion-item>
 </ion-list>
 
 <div padding>

@@ -10,6 +10,8 @@ export class SignUpPage {
     username: string;
     password: string;
     email: string;
+    name: string;
+    parkingLot: string;
 
     constructor(public nav: NavController, public platform: Platform){//, public http: Http, public authenticationApi: AuthenticationApi) {
     }
