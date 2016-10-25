@@ -1,24 +1,41 @@
 <ion-header>
+
   <ion-navbar>
-    <ion-title>Home</ion-title>
+
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title  class="center">Moody</ion-title>
   </ion-navbar>
 
 </ion-header>
 
+<ion-menu [content]="mycontent">
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        Theta Lot
+      </ion-item>
+      <ion-item>
+        Binkley
+      </ion-item>
+      <ion-item>
+        Airliner
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav>
+
 <ion-content padding>
-  <h2>Moody</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
-<div class="round-button">
-  <div class="round-button-circle">
-    <a class="round-button">Check in</a>
-  </div>
-</div>
+
+ <!-- <doughnut-chart> </doughnut-chart> -->
+
+<h3>Current Latitude: {{locationTracker.lat}}</h3>
+<h3>Current Longitude: {{locationTracker.lng}}</h3>
+
+<button ion-button color="secondary" block primary (click)="start()" large>Check in</button>
+
 
 </ion-content>
