@@ -5,6 +5,7 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { LocationTracker } from '../location/location-tracker';
 import { LoginPage } from '../pages/login/login';
 import { SignUpPage } from '../pages/signup/signup';
 
@@ -30,7 +31,8 @@ import { SignUpPage } from '../pages/signup/signup';
     TabsPage,
     LoginPage,
     SignUpPage
+
   ],
-  providers: []
+  providers: [LocationTracker]
 })
 export class AppModule {}
