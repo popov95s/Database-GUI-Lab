@@ -55,12 +55,14 @@ export class LocationTracker {
     this.watch = Geolocation.watchPosition(options).filter((p: any) => p.code === undefined).subscribe((position: Geoposition) => {
 
       console.log(position);
-
+      this.lat = position.coords.latitude;
+      this.lng = position.coords.longitude;
+      
       // Run update inside of Angular's zone
-      this.zone.run(() => {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-      });
+      // this.zone.run(() => {
+      //   this.lat = position.coords.latitude;
+      //   this.lng = position.coords.longitude;
+      // });
 
     });
 
