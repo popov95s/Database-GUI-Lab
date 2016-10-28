@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { MenuController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { LocationTracker } from '../../location/location-tracker';
-import { DoughnutChartComponent } from '../../charts/doughnut-chart';
+
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
+
+
 })
 
 export class HomePage {
