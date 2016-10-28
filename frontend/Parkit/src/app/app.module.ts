@@ -6,6 +6,8 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LocationTracker } from '../location/location-tracker';
+import { LoginPage } from '../pages/login/login';
+import { SignUpPage } from '../pages/signup/signup';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import { LocationTracker } from '../location/location-tracker';
     ContactPage,
     HomePage,
     TabsPage,
+    LoginPage,
+    SignUpPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -25,6 +29,8 @@ import { LocationTracker } from '../location/location-tracker';
     ContactPage,
     HomePage,
     TabsPage,
+    LoginPage,
+    SignUpPage
 
 
   ],
