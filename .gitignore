@@ -1,0 +1,14 @@
+# Flask .py[cod] files
+*.py[cod]
+
+# Scripts
+gitSetup.sh
+
+# Socket files
+*.sock
+
+# Vim swap files
+*.swp
+
+# Virtual Environment
+parkitenv
