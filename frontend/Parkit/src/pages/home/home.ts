@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MenuController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { LocationTracker } from '../../location/location-tracker';
-import { DoughnutChartComponent } from '../../charts/doughnut-chart';
+import { ChartComponent } from '../charts/charts.component';
 
 @Component({
   selector: 'page-home',
