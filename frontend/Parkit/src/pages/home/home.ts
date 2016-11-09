@@ -7,6 +7,8 @@ import { ChartComponent } from '../charts/charts.component';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
+
+
 })
 
 export class HomePage {

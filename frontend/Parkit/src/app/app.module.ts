@@ -14,6 +14,7 @@ import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { ChartsService } from '../pages/charts/chartsService/charts.service';
 
 
+
 @NgModule({
   declarations: [
     MyApp,
@@ -37,8 +38,18 @@ import { ChartsService } from '../pages/charts/chartsService/charts.service';
     HomePage,
     TabsPage,
     LoginPage,
+<<<<<<< HEAD
     SignUpPage
   ],
   providers: [LocationTracker, ChartsService]
+=======
+    SignUpPage,
+
+
+  ],
+  providers: [LocationTracker],
+
+
+>>>>>>> GUIDev
 })
 export class AppModule {}
