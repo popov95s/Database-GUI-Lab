@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MenuController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { LocationTracker } from '../../location/location-tracker';
-
+import { ChartComponent } from '../charts/charts.component';
 
 @Component({
   selector: 'page-home',
@@ -17,7 +17,7 @@ export class HomePage {
 
   }
 
-  openMenu() {
+openMenu() {
   this.menuCtrl.open();
 }
 

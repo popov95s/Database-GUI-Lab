@@ -8,6 +8,11 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LocationTracker } from '../location/location-tracker';
 import { LoginPage } from '../pages/login/login';
 import { SignUpPage } from '../pages/signup/signup';
+import { ChartModule } from 'ng2-chartjs2';
+import { ChartComponent } from '../pages/charts/charts.component';
+import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
+// import { ChartsService } from '../pages/charts/chartsService/charts.service';
+
 
 
 @NgModule({
@@ -19,10 +24,11 @@ import { SignUpPage } from '../pages/signup/signup';
     TabsPage,
     LoginPage,
     SignUpPage,
-
+    ChartComponent
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    ChartModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -32,12 +38,8 @@ import { SignUpPage } from '../pages/signup/signup';
     HomePage,
     TabsPage,
     LoginPage,
-    SignUpPage,
-
-
+    SignUpPage
   ],
-  providers: [LocationTracker],
-
-
+  providers: [LocationTracker]
 })
 export class AppModule {}
