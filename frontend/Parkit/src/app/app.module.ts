@@ -11,7 +11,7 @@ import { SignUpPage } from '../pages/signup/signup';
 import { ChartModule } from 'ng2-chartjs2';
 import { ChartComponent } from '../pages/charts/charts.component';
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
-import { ChartsService } from '../pages/charts/chartsService/charts.service';
+// import { ChartsService } from '../pages/charts/chartsService/charts.service';
 
 
 
@@ -38,18 +38,8 @@ import { ChartsService } from '../pages/charts/chartsService/charts.service';
     HomePage,
     TabsPage,
     LoginPage,
-<<<<<<< HEAD
     SignUpPage
   ],
-  providers: [LocationTracker, ChartsService]
-=======
-    SignUpPage,
-
-
-  ],
-  providers: [LocationTracker],
-
-
->>>>>>> GUIDev
+  providers: [LocationTracker]
 })
 export class AppModule {}

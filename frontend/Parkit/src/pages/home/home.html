@@ -10,7 +10,7 @@
 
 </ion-header>
 
-<ion-menu [content]="mycontent">
+<ion-menu>
   <ion-content>
     <ion-list>
       <ion-item>
@@ -26,12 +26,11 @@
   </ion-content>
 </ion-menu>
 
-<ion-nav #mycontent [root]="rootPage"></ion-nav>
+
 
 <ion-content padding>
 
-  <!-- <doughnut-chart> </doughnut-chart> -->
- <chartComponent></chartComponent>
+<chartComponent> </chartComponent>
 
 <h3>Current Latitude: {{locationTracker.lat}}</h3>
 <h3>Current Longitude: {{locationTracker.lng}}</h3>

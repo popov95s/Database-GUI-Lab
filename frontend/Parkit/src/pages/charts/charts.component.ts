@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Chart } from 'ng2-chartjs2';
-import { ChartsService } from './chartsService/charts.service';
- 
+// import { ChartsService } from './chartsService/charts.service';
+
 @Component({
   selector: 'chartComponent',
   templateUrl: './charts.component.html'
@@ -9,9 +9,9 @@ import { ChartsService } from './chartsService/charts.service';
 export class ChartComponent {
 	//needs service to be read in from API
 	getDataTry:JSON;
-	constructor(ChartsService: ChartsService){
+	constructor(){
 
-		this.getDataTry= ChartsService.makeGetRequest();
+		// this.getDataTry= ChartsService.makeGetRequest();
 }
   doughnutLabels: string[] = ["Full","Empty"];
   doughnutData: Chart.Dataset[] = [

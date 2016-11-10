@@ -17,7 +17,7 @@ export class HomePage {
 
   }
 
-  openMenu() {
+openMenu() {
   this.menuCtrl.open();
 }
 
