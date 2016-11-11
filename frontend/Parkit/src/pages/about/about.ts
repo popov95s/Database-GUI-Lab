@@ -19,25 +19,31 @@ export class AboutPage {
    }
 
 
-   addMarkers(){
+   addMarkers(lat: any, lon: any, name: string){
+     // create LatLng object
+     let loc: GoogleMapsLatLng = new GoogleMapsLatLng(lat,lon);
+
+     // create CameraPosition
+     let position: CameraPosition = {
+       target: loc,
+       zoom: 18,
+       tilt: 30
+     };
+
      // create new marker
-      let marker = new GoogleMapsMarker({
-     position: location,
-     draggable: true,
-     map: this.map,
-     })
+     let markerOptions: GoogleMapsMarkerOptions = {
+       position: loc,
+       title: name
+     };
 
-     marker.setVisible(true);
-
-     this.map.addMarker(marker).then((marker1: GoogleMapsMarker) => {
-       marker1.showInfoWindow();
-     });
-
+     this.map.addMarker(markerOptions).then((marker: GoogleMapsMarker) => {
+         marker.showInfoWindow();
+       });
    }
 
    loadMap(){
 
-       let location1 = new GoogleMapsLatLng(-34.9290,138.6010);
+       let location1 = new GoogleMapsLatLng(32.8412,-96.7845);
 
        this.map = new GoogleMap('map', {
          'backgroundColor': 'nil',
@@ -59,28 +65,18 @@ export class AboutPage {
            'zoom': 15,
            'bearing': 50
          }
-       });
 
+       });
 
        this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
            console.log('Map is ready!');
-           // create new marker
-           // create LatLng object
-           let location: GoogleMapsLatLng = new GoogleMapsLatLng(43.0741904,-89.3809802);
-
-          //  let marker = new GoogleMapsMarker({
-          // position: location,
-          // draggable: true,
-          // map: this.map,
-          // })
-          //
-          // marker.setVisible(true);
-          //
-          // this.map.addMarker(marker).then((marker1: GoogleMapsMarker) => {
-          //   marker1.showInfoWindow();
-          // });
-
-
+           this.addMarkers(32.8407707, -96.7826080, "Binkley");
+           this.addMarkers(32.8463058, -96.7834326, "Airline");
+           this.addMarkers(32.8469162, -96.7862244, "Law");
+           this.addMarkers(32.8414574, -96.7812195, "Moody");
+           this.addMarkers(32.8397369, -96.7798080, "Mustang");
+           this.addMarkers(32.8459015, -96.7803574, "Theta Lot");
+           this.addMarkers(32.8447151, -96.7811737, "Commuter Lot");
        });
 
    }
