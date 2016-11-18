@@ -7,4 +7,29 @@
 </ion-header>
 
 <ion-content>
+
+<ion-item>
+  <ion-label fixed>Parking Lot</ion-label>
+  <ion-input type="text" value=""></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label fixed>Floor</ion-label>
+  <ion-input type="password"></ion-input>
+</ion-item>
+
+
+<ion-card>
+  <ion-card-content>
+    <button ion-button block color="standard" (click)="takePicture()">Take Picture</button>
+    <img [src]="base64Image" *ngIf="base64Image" />
+  </ion-card-content>
+</ion-card>
+
+
+<div padding>
+<button ion-button block color="secondary">Save</button>
+</div>
+
+
 </ion-content>

@@ -19,7 +19,7 @@ export class AboutPage {
    }
 
 
-   addMarkers(lat: any, lon: any, name: string){
+   addMarkers(lat: any, lon: any, name: string, color: any){
      // create LatLng object
      let loc: GoogleMapsLatLng = new GoogleMapsLatLng(lat,lon);
 
@@ -30,10 +30,25 @@ export class AboutPage {
        tilt: 30
      };
 
-     // create new marker
+     let image;
+     if (color == 1){
+
+       image = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+
+     } else if (color == 2){
+
+       image = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+
+     } else if(color == 3){
+
+       image = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+     }
+
+
      let markerOptions: GoogleMapsMarkerOptions = {
        position: loc,
-       title: name
+       title: name,
+       icon: image
      };
 
      this.map.addMarker(markerOptions).then((marker: GoogleMapsMarker) => {
@@ -70,13 +85,13 @@ export class AboutPage {
 
        this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
            console.log('Map is ready!');
-           this.addMarkers(32.8407707, -96.7826080, "Binkley");
-           this.addMarkers(32.8463058, -96.7834326, "Airline");
-           this.addMarkers(32.8469162, -96.7862244, "Law");
-           this.addMarkers(32.8414574, -96.7812195, "Moody");
-           this.addMarkers(32.8397369, -96.7798080, "Mustang");
-           this.addMarkers(32.8459015, -96.7803574, "Theta Lot");
-           this.addMarkers(32.8447151, -96.7811737, "Commuter Lot");
+           this.addMarkers(32.8407707, -96.7826080, "Binkley 20% Full", 1);
+           this.addMarkers(32.8463058, -96.7834326, "Airline 50% Full", 2);
+           this.addMarkers(32.8469162, -96.7862244, "Law 85% Full", 3);
+           this.addMarkers(32.8414574, -96.7812195, "Moody 10% Full", 1);
+           this.addMarkers(32.8397369, -96.7798080, "Mustang 45% Full", 2);
+           this.addMarkers(32.8459015, -96.7803574, "Theta Lot 90% Full", 3);
+           this.addMarkers(32.8447151, -96.7811737, "Commuter Lot 55% Full", 2);
        });
 
    }
