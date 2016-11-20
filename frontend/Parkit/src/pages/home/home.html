@@ -5,21 +5,18 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title  class="center">Moody</ion-title>
+    <ion-title  class="center">{{currentParkingLot}}</ion-title>
+    <button button-icon icon ion-settings></button>
   </ion-navbar>
 
 </ion-header>
 
 <ion-menu [content]="content">
     <ion-list #content>
-      <ion-item>
-        Theta Lot
-      </ion-item>
-      <ion-item>
-        Binkley
-      </ion-item>
-      <ion-item>
-        Airliner
+      <ion-item *ngFor='let parkingLot of parkingLots'>
+       
+        <button ion-button menu-close block detail-none (click)='changeName(parkingLot.parkingLot)'>{{parkingLot.parkingLot}}</button>
+        
       </ion-item>
     </ion-list>
 </ion-menu>
