@@ -13,9 +13,9 @@
 
 <ion-menu [content]="content">
     <ion-list #content>
-      <ion-item *ngFor='let parkingLot of parkingLots'>
-       
-        <button ion-button menu-close block detail-none (click)='changeName(parkingLot.parkingLot)'>{{parkingLot.parkingLot}}</button>
+      <ion-item *ngFor='let parkingLot of parkingLots' (click)='changeName(parkingLot.parkingLot)' >
+       {{parkingLot.parkingLot}}
+        <!--<button ion-button menu-close block detail-none (click)='changeName(parkingLot.parkingLot)'>{{parkingLot.parkingLot}}</button>-->
         
       </ion-item>
     </ion-list>
