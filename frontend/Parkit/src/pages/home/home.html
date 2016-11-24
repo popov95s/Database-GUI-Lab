@@ -6,7 +6,9 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title  class="center">{{currentParkingLot}}</ion-title>
-    <button button-icon icon ion-settings></button>
+    <ion-buttons end click="openSettings()">
+      <button ><ion-icon name="settings"></ion-icon></button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -14,9 +16,7 @@
 <ion-menu [content]="content">
     <ion-list #content>
       <ion-item *ngFor='let parkingLot of parkingLots' (click)='changeName(parkingLot.parkingLot)' >
-       {{parkingLot.parkingLot}}
-        <!--<button ion-button menu-close block detail-none (click)='changeName(parkingLot.parkingLot)'>{{parkingLot.parkingLot}}</button>-->
-        
+       {{parkingLot.parkingLot}}    
       </ion-item>
     </ion-list>
 </ion-menu>

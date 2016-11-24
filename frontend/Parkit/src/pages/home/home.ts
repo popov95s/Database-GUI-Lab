@@ -3,6 +3,8 @@ import { MenuController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { LocationTracker } from '../../location/location-tracker';
 import { ChartComponent } from '../charts/charts.component';
+import { SettingsModal } from '../settings-modal/settings-modal';
+import {Modal} from 'ionic-angular';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -26,7 +28,6 @@ export class HomePage {
   } 
 changeName(parkingLot:String){
   this.currentParkingLot=parkingLot;
-  console.log(this.currentParkingLot);
 }
 openMenu() {
   this.menuCtrl.open();
@@ -47,5 +48,8 @@ start(){
 stop(){
   this.locationTracker.stopTracking();
 }
-
+openSettings(){
+  let settingsModal= Modal.apply(SettingsModal);
+  //this.navCtrl.present(settingsModal);
+}
 }
