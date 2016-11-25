@@ -3,8 +3,7 @@ import { MenuController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { LocationTracker } from '../../location/location-tracker';
 import { ChartComponent } from '../charts/charts.component';
-import { SettingsModal } from '../settings-modal/settings-modal';
-import {Modal} from 'ionic-angular';
+import { SettingsPage } from '../settings/settings';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -49,7 +48,7 @@ stop(){
   this.locationTracker.stopTracking();
 }
 openSettings(){
-  let settingsModal= Modal.apply(SettingsModal);
+  this.navCtrl.push(SettingsPage);
   //this.navCtrl.present(settingsModal);
 }
 }

@@ -4,28 +4,28 @@ import { Platform } from 'ionic-angular';
 import { TabsPage } from '../../pages/tabs/tabs';
 import { LoginPage } from '../login/login';
 @Component({
-    templateUrl: '../../pages/signup/signup.html',
-   // styleUrls: [ '../../pages/signup/signup.scss' ]
+    templateUrl: '../../pages/settings/settings.html',
     
     //providers: [AuthenticationApi]
 })
-export class SignUpPage {
+export class SettingsPage {
     username: string;
     password: string;
     email: string;
-    name: string;
+    location: boolean;
     parkingLot: string;
-
     constructor(public nav: NavController, public platform: Platform){//, public http: Http, public authenticationApi: AuthenticationApi) {
     }
 
-    
-    signUp(){
-        //should send a POST 
-        this.nav.setRoot(TabsPage);
+    save() {
+        //this.authenticationApi.login(this.userName, this.password).subscribe(
+             //data => {      
+               //Navigate to home page              
+                this.nav.setRoot(TabsPage);
+             //}
+          //)
     }
-
-    backToLogin(){
+    backToHome(){
         this.nav.setRoot(LoginPage);
     }
 }
