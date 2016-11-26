@@ -25,7 +25,7 @@ export class SettingsPage {
              //}
           //)
     }
-    backToHome(){
+    signOut(){
         this.nav.setRoot(LoginPage);
     }
 }

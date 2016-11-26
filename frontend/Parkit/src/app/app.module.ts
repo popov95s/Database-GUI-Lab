@@ -12,6 +12,7 @@ import { ChartModule } from 'ng2-chartjs2';
 import { ChartComponent } from '../pages/charts/charts.component';
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { SettingsPage } from '../pages/settings/settings';
+import { ChartsService } from '../pages/charts/chartsService/charts.service';
 
 
 
@@ -42,6 +43,6 @@ import { SettingsPage } from '../pages/settings/settings';
     SignUpPage,
     SettingsPage
   ],
-  providers: [LocationTracker]
+  providers: [LocationTracker, ChartsService]
 })
 export class AppModule {}
