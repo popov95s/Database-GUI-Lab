@@ -1,0 +1,52 @@
+@app.route('/signup', methods=['GET', 'POST]')
+def signup():
+	sign_up_info = request.get_json()
+	try:
+		if sign_up_info['username'] is None or sign_up_info['password'] is None or sign_up_info['email'] is None or sign_up_info['first_name'] is None or sign_up_info['last_name'] is None or sign_up_info['parkitLot'] is None:
+			return bad_request('No username or password provided')
+	except:
+		return bad_request('JSON was unable to be parsed')
+
+	if(User.query.filter_by(username=sign_up_info['username']).first() is not None):
+		return bad_request("Username is already registered")
+	else:	
+		user = User(username = sign_up_info['username'],
+					password = sign_up_info['password'],
+					email = sign_up_info['email'],
+					first_name = sign_up_info['first_name'],
+					last_name = sign_up_info['last_name'],
+					parkingLot = sign_up_info['parkingLot'])
+		db.session.add(user)
+		g.current_user = user
+		return jsonify({"Authorization": user.generate_auth_token()})
+
+
+
+
+@app.route('/forgotpass', methods=['GET', 'POST'])
+def forgotpass:
+	email_info = request.get_json()
+	try:
+		if email_info['email'] is None:
+			return bad_request('No email provided')
+	except:
+		return bad_request('JSON was unable to be parsed')
+
+	user = User.query.filter_by(email = email_info['email'])
+	if user is not None:
+		"""email stuff"""
+
+
+@app.route('/checkin', methods=['GET', 'POST'])
+def checkin():
+	checkin_info = request.get_json()
+	user = verify_auth_token(checkin_info['Authorization'])
+	try:
+		if user is not None:
+			lot_parked = checkin_info['parkingLot']
+			floor_parked = checkin_info['floor']
+			new_checkin = ParkingInfo(username = user, Lot = lot_parked, floor = floor_parked)
+			db.session.add(new_checkin)
+	except:
+		return bad_request("something idk could be unauthorized")
+	return unauthorized("idk some error")
