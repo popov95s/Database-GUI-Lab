@@ -25,10 +25,10 @@ export class SignUpPage {
 
 
     signUp() {
-        var data = JSON.stringify({
+        var data = {
             username: this.username, password: this.password,
             email: this.email, first_name: this.firstName, last_name: this.lastName, parkingLot: this.parkingLot
-        });
+        };
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         this.http.post('http://private-2697b-parkit1.apiary-mock.com/signup',JSON.stringify(data),{headers:headers})
