@@ -11,7 +11,8 @@ import { SignUpPage } from '../pages/signup/signup';
 import { ChartModule } from 'ng2-chartjs2';
 import { ChartComponent } from '../pages/charts/charts.component';
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
-// import { ChartsService } from '../pages/charts/chartsService/charts.service';
+import { SettingsPage } from '../pages/settings/settings';
+import { ChartsService } from '../pages/charts/chartsService/charts.service';
 
 
 
@@ -24,7 +25,8 @@ import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
     TabsPage,
     LoginPage,
     SignUpPage,
-    ChartComponent
+    ChartComponent,
+    SettingsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -38,8 +40,9 @@ import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
     HomePage,
     TabsPage,
     LoginPage,
-    SignUpPage
+    SignUpPage,
+    SettingsPage
   ],
-  providers: [LocationTracker]
+  providers: [LocationTracker, ChartsService]
 })
 export class AppModule {}

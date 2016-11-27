@@ -14,8 +14,12 @@
     <ion-input [(ngModel)]="email"  type="email" value=""></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label floating>Name</ion-label>
-    <ion-input [(ngModel)]="name"  type="text" value=""></ion-input>
+    <ion-label floating>First name</ion-label>
+    <ion-input [(ngModel)]="firstName"  type="text" value=""></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Last name</ion-label>
+    <ion-input [(ngModel)]="lastName"  type="text" value=""></ion-input>
   </ion-item>
   <br>
   <ion-item>
@@ -28,5 +32,8 @@
 </ion-list>
 
 <div padding>
-  <button ion-button color="red"  block (click)="signUp()">Register</button>
+  <button ion-button color="blue"  block (click)="signUp()">Register</button>
+</div>
+<div padding>
+  <button ion-button light  block (click)="backToLogin()">Back</button>
 </div>

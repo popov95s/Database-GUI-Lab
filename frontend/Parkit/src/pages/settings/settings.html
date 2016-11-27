@@ -1,0 +1,46 @@
+<ion-header>
+
+	<ion-navbar>
+    	<ion-title  class="center">Settings</ion-title>
+	</ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding>
+	<ion-list>
+		
+		<ion-item>
+			<ion-label floating>Password</ion-label>
+			<ion-input [(ngModel)]="password" type="password" value="password"></ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-label floating>First Name</ion-label>
+			<ion-input [(ngModel)]="firstName" type="text" value="firstName"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>Last Name</ion-label>
+			<ion-input [(ngModel)]="lastName" type="text" value="lastName"></ion-input>
+		</ion-item>
+		<ion-item>
+            <ion-label floating>Location</ion-label>
+			<ion-toggle [(ngModel)]="location" toggle-class="toggle-calm">Location</ion-toggle>
+		</ion-item>
+		<br>
+		<ion-item>
+			<ion-label floating>Favorite Parking Lot</ion-label>
+			<ion-select [(ngModel)]="parkingLot">
+				<ion-option value="binkley" selected="true">Binkley</ion-option>
+				<ion-option value="airline">Airline</ion-option>
+			</ion-select>
+		</ion-item>
+	</ion-list>
+
+	<div padding>
+		<button ion-button color="blue" block (click)="save()">Save</button>
+	</div>
+    <div padding>
+	    <button ion-button color="danger" block (click)="signOut()">Log out</button>
+    </div>
+</ion-content>
