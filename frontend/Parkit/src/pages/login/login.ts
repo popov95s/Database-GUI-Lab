@@ -19,9 +19,14 @@ export class LoginPage {
         var data = {username: this.username, password:this.password};
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        this.http.post('http://private-2697b-parkit1.apiary-mock.com/login',JSON.stringify(data),{headers:headers})
+        headers.append("Access-Control-Allow-Origin", "*");
+        headers.append("Access-Control-Allow-Headers", "x-requested-with, Content-Type, origin, authorization, accept, client-security-token");
+        headers.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+        headers.append("Access-Control-Max-Age", "1000");
+        this.http.post('api/login',JSON.stringify(data),{headers:headers})
         .subscribe( data => {
             this.nav.setRoot(TabsPage, data.json()['Authorization']);
+            console.log(data.json()['Authorization']);
         },
         (err) => alert("Incorrect Username or Password"));
         //this.authenticationApi.login(this.userName, this.password).subscribe(
