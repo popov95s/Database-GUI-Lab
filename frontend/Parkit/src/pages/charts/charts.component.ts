@@ -1,23 +1,25 @@
 import { Component } from '@angular/core';
 import { Chart } from 'ng2-chartjs2';
  import { ChartsService } from './chartsService/charts.service';
+import { Headers } from '@angular/http';
 
 @Component({
   selector: 'chartComponent',
-  templateUrl: './charts.component.html'
+  templateUrl: './charts.component.html',
+  providers: [ChartsService]
 })
 export class ChartComponent {
 	//needs service to be read in from API
 	getDataTry:any;
+  percentFull: number;
 	constructor(public chartService: ChartsService){
-    this.loadData();
 		// this.getDataTry= ChartsService.makeGetRequest();
   }
-  loadData(){
-    this.chartService.load()
+  loadData(parkingLot : string, headers : Headers ){
+    this.chartService.load(parkingLot, headers)
       .then(data=>{
-        this.getDataTry=data;
-        console.log(this.getDataTry);
+        this.percentFull=data['percentFull'];
+        console.log(this.percentFull);
       })
 		.catch(data => alert(data.json().error));
   }
@@ -25,7 +27,7 @@ export class ChartComponent {
   doughnutData: Chart.Dataset[] = [
     {
       label: '# of Cars',
-      data: [this.getDataTry || 70,100-70],
+      data: [this.percentFull,100-this.percentFull],
       backgroundColor: [
         'red',
         'rgba(0,255,0,100)',

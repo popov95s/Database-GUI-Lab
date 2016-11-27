@@ -17,6 +17,18 @@ export class SettingsPage {
     firstName: string;
     lastName: string;
     constructor(public nav: NavController, public platform: Platform, public http: Http){//, public authenticationApi: AuthenticationApi) {
+        
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
+        this.http.get('http://private-2697b-parkit1.apiary-mock.com/settings',{headers: headers})
+            .subscribe(data=>{
+                this.firstName=data.json()['first_name'];
+                this.lastName=data.json()['last_name'];
+                this.parkingLot=data.json()['parkingLot'];
+            
+            },
+            (err)=> alert("Error"));
     }
 
     save() {
