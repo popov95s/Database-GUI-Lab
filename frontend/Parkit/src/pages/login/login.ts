@@ -43,7 +43,7 @@ export class LoginPage {
     showAlert() {
     let alert = this.alert.create({
       title: 'Error',
-      subTitle: 'The username or password you entered are incorrect!',
+      message: 'The username or password you entered are incorrect!',
       buttons: ['OK']
     });
     alert.present();
