@@ -7,10 +7,10 @@ export class ChartsService {
         return [[Http]];
     }
 
-    constructor(private http: Http) {
+    constructor(private http?: Http) {
 
     }
-    load(parkingLot: string, headers: Headers) {
+    load(parkingLot?: string, headers?: Headers) {
         var bodyData= {parkingLot:parkingLot};
         return new Promise(resolve => {
             this.http.get('http://private-2697b-parkit1.apiary-mock.com/home', { body: bodyData, headers: headers })

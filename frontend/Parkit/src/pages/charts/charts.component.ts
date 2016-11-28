@@ -12,10 +12,10 @@ export class ChartComponent {
 	//needs service to be read in from API
 	getDataTry:any;
   percentFull: number;
-	constructor(public chartService: ChartsService){
+	constructor(private chartService?: ChartsService){
 		// this.getDataTry= ChartsService.makeGetRequest();
   }
-  loadData(parkingLot : string, headers : Headers ){
+  loadData(parkingLot? : string, headers ?: Headers ){
     this.chartService.load(parkingLot, headers)
       .then(data=>{
         this.percentFull=data['percentFull'];

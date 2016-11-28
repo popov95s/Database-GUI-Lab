@@ -5,14 +5,15 @@ import { TabsPage } from '../../pages/tabs/tabs';
 import { SignUpPage } from '../../pages/signup/signup';
 import {Http} from '@angular/http';
 import { Headers } from '@angular/http';
+import { AlertController } from 'ionic-angular';
 @Component({
-    templateUrl: '../../pages/login/login.html',
+    templateUrl: '../../pages/login/login.html'
     //providers: [AuthenticationApi]
 })
 export class LoginPage {
     username: string;
     password: string;
-    constructor(public nav: NavController, public platform: Platform, public http: Http){//, public authenticationApi: AuthenticationApi) {
+    constructor(public nav: NavController, public platform: Platform, public http: Http, public alert: AlertController) {
     }
 
     login() {
@@ -28,7 +29,7 @@ export class LoginPage {
             this.nav.setRoot(TabsPage, data.json()['Authorization']);
             console.log(data.json()['Authorization']);
         },
-        (err) => alert("Incorrect Username or Password"));
+        (err) => this.showAlert());
         //this.authenticationApi.login(this.userName, this.password).subscribe(
              //data => {      
                //Navigate to home page              
@@ -39,4 +40,12 @@ export class LoginPage {
     signUp(){
         this.nav.push(SignUpPage);
     }
+    showAlert() {
+    let alert = this.alert.create({
+      title: 'Error',
+      message: 'The username or password you entered are incorrect!',
+      buttons: ['OK']
+    });
+    alert.present();
+     }
 }
