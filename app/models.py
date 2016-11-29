@@ -20,7 +20,7 @@ class Lot(db.Model):
 class ParkingInfo(db.Model):
     __tablename__ = "ParkingInfo"
     parking_id = db.Column(db.Integer, primary_key=True, autoincrement=True,  nullable=False)
-    parking_user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'), nullable=False)
+    parking_user_id = db.Column(db.String(36), db.ForeignKey('Users.user_id'), nullable=False)
     lot = db.Column(db.String(80), nullable=False)
     floor = db.Column(db.Integer, nullable=False)
 
@@ -32,7 +32,7 @@ class ParkingInfo(db.Model):
 
 class User(db.Model):
     __tablename__ = 'Users'
-    user_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    user_id = db.Column(db.String(36), primary_key=True, nullable=False)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), unique=True, nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=False)
