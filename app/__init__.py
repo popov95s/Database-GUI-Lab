@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_httpauth import HTTPBasicAuth
 from .errors import bad_request, forbidden, unauthorized
 import os
+import uuid
 
 if os.path.exists('../parkit.env'):
     print "Importing environment from parkit.env..."
@@ -44,19 +45,26 @@ def login():
         return jsonify({"Authorization": user.generate_auth_token()})
     return unauthorized('Incorrect username or password.')
 
-# TODO: find a much better way to check if values are none
+# TODO: add a default return value with appropriate HTTP status code 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     sign_up_info = request.get_json()
     try:
-        if sign_up_info['username'] is None or sign_up_info['password'] is None or sign_up_info['email'] is None or sign_up_info['first_name'] is None or sign_up_info['last_name'] is None or sign_up_info['parkitLot'] is None:
-            return bad_request('No username or password provided')
+        if sign_up_info['username'] is None or \
+           sign_up_info['password'] is None or \
+           sign_up_info['email'] is None or \
+           sign_up_info['first_name'] is None or \
+           sign_up_info['last_name'] is None or \
+           sign_up_info['parkingLot'] is None:
+            return bad_request('Incomplete information.')
     except:
-        return bad_request('JSON was unable to be parsed')
-    if(User.query.filter_by(username=sign_up_info['username']).first() is not None):
-        return bad_request("Username is already registered")
+        return bad_request('JSON was unable to be parsed.')
+    user = User.query.filter_by(username=sign_up_info['username']).first();
+    if user is not None:
+        return bad_request('Username already exists.')
     else:    
-        user = User(username = sign_up_info['username'],
+        user = User(user_id = str(uuid.uuid4()),
+                    username = sign_up_info['username'],
                     password = sign_up_info['password'],
                     email = sign_up_info['email'],
                     first_name = sign_up_info['first_name'],
@@ -111,11 +119,15 @@ def checkout():
 @auth.verify_password
 def verify_password(username_or_token, password):
     if username_or_token == '':
+        print username_or_token
         return False
     if password == '' or password is None:
+        print username_or_token
         g.current_user = User.verify_auth_token(username_or_token)
-        g.token_used = True
+    #    g.token_used = True
         return g.current_user is not None
+    print "username: " + username_or_token
+    print "password: " + password
     user = User.query.filter_by(username=username_or_token).first()
     if not user:
         return False
@@ -124,14 +136,14 @@ def verify_password(username_or_token, password):
 
 @auth.error_handler
 def auth_error():
-    return unauthorized('Invalid credentials.')
+    return unauthorized('Invalid credentials - authentication error.')
 
 @app.route('/token', methods=['GET'])
 @auth.login_required
 def get_token():
     if g.token_used:
-        return unauthorized('Invalid credentials.')
-    return jsonify({"Authorization": g.current_user.generate_auth_token()})
+        return unauthorized('Invalid credentials - token used.')
+    return jsonify({"Authorization": request.headers.get('Authorization')})
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',debug=True)
