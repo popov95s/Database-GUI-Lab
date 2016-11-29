@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
+import { Http, Headers } from '@angular/http';
 import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarkerOptions, GoogleMapsMarker, CameraPosition } from 'ionic-native';
 
 // ios API KEY: AIzaSyAPJVrypTj0ZaAd-xO8egPEyiUpmnt2QZs
@@ -12,7 +13,7 @@ export class AboutPage {
 
  map: GoogleMap;
 
-   constructor(public navCtrl: NavController, public platform: Platform) {
+   constructor(public navCtrl: NavController, public platform: Platform, public http : Http) {
        platform.ready().then(() => {
            this.loadMap();
        });
@@ -31,15 +32,15 @@ export class AboutPage {
      };
 
      let image;
-     if (color == 1){
+     if (color >= 0 || color <= 33){
 
        image = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
 
-     } else if (color == 2){
+     } else if (color >= 34 || color <= 66){
 
        image = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
 
-     } else if(color == 3){
+     } else if(color >= 67 || color <= 100){
 
        image = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
      }
@@ -94,6 +95,18 @@ export class AboutPage {
            this.addMarkers(32.8447151, -96.7811737, "Commuter Lot 55% Full", 2);
        });
 
+   }
+
+   getStats(){
+
+     let headers = new Headers();
+     headers.append('Content-Type', 'application/json');
+     headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
+     this.http.get('http://private-2697b-parkit1.apiary-mock.com/map',{headers: headers})
+         .subscribe(data=>{
+
+         },
+         (err)=> alert("Error"));
    }
 
  }

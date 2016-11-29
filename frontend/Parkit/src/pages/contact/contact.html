@@ -13,13 +13,13 @@
   <ion-card-content>
     <h1 id="Header">Car Details</h1>
     <ion-item>
-      <ion-label fixed *ngIf="!new" >Parking Lot</ion-label>
-      <ion-input type="text" value="" *ngIf="new"></ion-input>
+      <ion-label fixed>Parking Lot</ion-label>
+      	<ion-input [(ngModel)]="parkinglot" type="text" value="parkinglot"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label *ngIf="new" fixed>Floor</ion-label>
-      <ion-input *ngIf="new" type="password"></ion-input>
+      <ion-label fixed>Floor</ion-label>
+      	<ion-input [(ngModel)]="floor" type="text" value="floor"></ion-input>
     </ion-item>
     <img [src]="base64Image" *ngIf="base64Image" />
     <button ion-button block color="standard" (click)="takePicture()">Take Picture</button>
@@ -28,8 +28,8 @@
 
 
 <div padding>
-<button ion-button block color="secondary">Save</button>
-<button ion-button block color="danger" (click)="delete()" id="deleteButton">Delete</button>
+<button ion-button block color="secondary" (click)="saveCar()">Save</button>
+<button ion-button block color="danger" (click)="deleteCar()" id="deleteButton">Delete</button>
 </div>
 
 

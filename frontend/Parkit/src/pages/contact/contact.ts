@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Http} from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import {Camera} from 'ionic-native';
 
 import { NavController } from 'ionic-angular';
@@ -10,21 +10,26 @@ import { NavController } from 'ionic-angular';
 })
 export class ContactPage {
 
-  public username: string;
+  public parkinglot: string;
   public base64Image: string;
+  public floor : string;
   private new: boolean;
 
   static get parameters() {
       return [[Http]];
   }
 
-  constructor(public navCtrl: NavController, private http:Http) {}
+  constructor(public navCtrl: NavController, private http:Http) {
+
+    //this.getCar();
+
+  }
 
   takePicture(){
   Camera.getPicture({
       destinationType: Camera.DestinationType.DATA_URL,
-      targetWidth: 1000,
-      targetHeight: 1000
+      targetWidth: 700,
+      targetHeight: 700
   }).then((imageData) => {
     // imageData is a base64 encoded string
       this.base64Image = "data:image/jpeg;base64," + imageData;
@@ -33,26 +38,56 @@ export class ContactPage {
   });
 }
 
-delete(){
-
-  this.base64Image = "";
-}
-
 
 ngOnit(){
 
   if (this.getCar() != null){
-    this.new = false; 
+    this.new = false;
   } else {
 
     this.new = true;
   }
 }
-getCar():any{
+getCar(){
 
-  let url = 'http://api.themoviedb.org/3/search/movie?query=&query=' + encodeURI(this.username) + '&api_key=5fbddf6b517048e25bc3ac1bbeafb919';
-  let response = this.http.get(url).map(res => res.json());
-  return response;
+
+  let headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
+  this.http.get('http://private-2697b-parkit1.apiary-mock.com/mycar',{headers: headers})
+      .subscribe(data=>{
+          this.parkinglot=data.json()['parkingLot'];
+          this.floor=data.json()['floor'];
+          this.base64Image=data.json()['imageURL'];
+
+      },
+      (err)=> alert("Error"));
+
+}
+
+saveCar(){
+
+  var data = {parkingLot : this.parkinglot, floor : this.floor, imageURL : this.base64Image}
+  var headers = new Headers();
+  headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
+  headers.append('Content-Type', 'application/json');
+  this.http.post('http://private-2697b-parkit1.apiary-mock.com/savecar',JSON.stringify(data),{headers:headers})
+    .subscribe(data=> {
+      console.log("success")},
+      (err) => console.log("fail"));
+
+}
+
+deleteCar(){
+
+  var data = {parkingLot : this.parkinglot, floor : this.floor, imageURL : this.base64Image}
+  var headers = new Headers();
+  headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
+  headers.append('Content-Type', 'application/json');
+  this.http.post('http://private-2697b-parkit1.apiary-mock.com/deletecar',JSON.stringify(data),{headers:headers})
+    .subscribe(data=> {
+      console.log("success")},
+      (err) => console.log("fail"));
 
 }
 
