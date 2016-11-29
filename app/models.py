@@ -17,6 +17,22 @@ class Lot(db.Model):
     def __repr__(self):
         return '<Lot %r>' % self.lot_name
 
+class ParkingInfo(db.Model):
+    __tablename__ = "ParkingInfo"
+    parking_id = db.Column(db.Integer, primary_key=True, autoincrement=True,  nullable=False)
+    parking_user_id = db.Column(db.Integer, db.ForeignKey('User.user_id'))
+    lot = db.Column(db.String(80), nullable=False)
+    floor = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, parking_id, parking_user_id, lot, floor):
+	self.parking_id = parking_id
+	self.parking_user_id = parking_user_id
+	self.lot = lot
+	self.floor = floor
+
+    def __repr__(self):
+        return '<ParkingID %r>' % self.parking_id
+
 class User(db.Model):
     __tablename__ = 'Users'
     user_id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -32,42 +48,29 @@ class User(db.Model):
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
 
-class ParkingInfo(db.Model):
-    __tablename__ = "ParkingInfo"
-    parking_id = db.Column(db.Integer, primary_key=True, autoincrement=True,  nullable=False)
-    parking_user_id = db.Column(db.Integer, db.ForeignKey('user_id'))
-    lot = db.Column(db.String(80), nullable=False)
-    floor = db.Column(db.Integer, nullable=False)
-
-    def __init__(self, parking_id, parking_user_id, lot, floor):
-	self.parking_id = parking_id
-	self.parking_user_id = parking_user_id
-	self.lot = lot
-	self.floor = floor
-
-def generate_auth_token(self, expiration=3600):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({"Authorization": self.user_id})
-
-@staticmethod
-def verify_auth_token(token):
-        s = Serializer(current_app.config['SECRET_KEY'])
-        try:
-            data = s.loads(token)
-        except:
-            return None
-        return User.query.get(data['Authorization'])
-
-@property
-def password(self):
-        raise AttributeError('Password is not a readable attribute.')
-
-@password.setter
-def password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-def verify_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-def __repr__(self):
-        return '<User %r>' % self.username
+    def generate_auth_token(self, expiration=3600):
+            s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
+            return s.dumps({"Authorization": self.user_id})
+    
+    @staticmethod
+    def verify_auth_token(token):
+            s = Serializer(current_app.config['SECRET_KEY'])
+            try:
+                data = s.loads(token)
+            except:
+                return None
+            return User.query.get(data['Authorization'])
+    
+    @property
+    def password(self):
+            raise AttributeError('Password is not a readable attribute.')
+    
+    @password.setter
+    def password(self, password):
+            self.password_hash = generate_password_hash(password)
+    
+    def verify_password(self, password):
+            return check_password_hash(self.password_hash, password)
+    
+    def __repr__(self):
+            return '<User %r>' % self.username
