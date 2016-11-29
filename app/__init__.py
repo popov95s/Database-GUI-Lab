@@ -23,7 +23,7 @@ auth = HTTPBasicAuth()
 
 db = SQLAlchemy(app)
 
-from .models import User, Lot
+from .models import User, Lot, ParkingInfo
 
 @app.route('/')
 def hello():
@@ -45,7 +45,7 @@ def login():
     return unauthorized('Incorrect username or password.')
 
 # TODO: find a much better way to check if values are none
-@app.route('/signup', methods=['GET', 'POST]')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
     sign_up_info = request.get_json()
     try:
@@ -68,7 +68,7 @@ def signup():
 
 # TODO: figure out sending emails for resetting passwords
 @app.route('/forgotpass', methods=['GET', 'POST'])
-def forgotpass:
+def forgotpass():
     email_info = request.get_json()
     try:
         if email_info['email'] is None:
@@ -96,8 +96,8 @@ def checkin():
     return unauthorized("idk some error")
 
 # TODO: Not sure if this is the proper/safe way to delete user, figure out how to get rid of auth token, not sure what to return (apiary sucks)
-@app.route('/checkout', methods=['DELETE'])
-def checkout:
+@app.route('/checkout', methods=['POST'])
+def checkout():
     checkout_user_token = request.headers.get('Authorization')
     user = verify_auth_token(checkout_user_token)
     try:
