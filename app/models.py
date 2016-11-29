@@ -20,15 +20,12 @@ class Lot(db.Model):
 class ParkingInfo(db.Model):
     __tablename__ = "ParkingInfo"
     parking_id = db.Column(db.Integer, primary_key=True, autoincrement=True,  nullable=False)
-    parking_user_id = db.Column(db.Integer, db.ForeignKey('User.user_id'))
+    parking_user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'), nullable=False)
     lot = db.Column(db.String(80), nullable=False)
     floor = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, parking_id, parking_user_id, lot, floor):
-	self.parking_id = parking_id
-	self.parking_user_id = parking_user_id
-	self.lot = lot
-	self.floor = floor
+    def __init__(self, **kwargs):
+        super(ParkingInfo, self).__init__(**kwargs)
 
     def __repr__(self):
         return '<ParkingID %r>' % self.parking_id
@@ -43,7 +40,7 @@ class User(db.Model):
     last_name = db.Column(db.String(80), nullable=False) 
     favorite_lot = db.Column(db.String(80))
     confirmed = db.Column(db.Boolean, default=False)
-    parking_info = db.relationship('ParkingInfo')
+    parking_info = db.relationship('ParkingInfo', backref='User')
     
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
