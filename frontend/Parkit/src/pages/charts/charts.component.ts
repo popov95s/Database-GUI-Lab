@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Chart } from 'ng2-chartjs2';
  import { ChartsService } from './chartsService/charts.service';
-import { Headers } from '@angular/http';
+import { Headers, Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'chartComponent',

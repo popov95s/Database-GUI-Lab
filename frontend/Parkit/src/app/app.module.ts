@@ -13,6 +13,8 @@ import { ChartComponent } from '../pages/charts/charts.component';
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { SettingsPage } from '../pages/settings/settings';
 import { ChartsService } from '../pages/charts/chartsService/charts.service';
+import { HttpModule, Http } from '@angular/http';
+import {ConnectionBackend } from '@angular/http';
 
 
 

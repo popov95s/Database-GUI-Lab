@@ -4,7 +4,9 @@ import { NavController } from 'ionic-angular';
 import { LocationTracker } from '../../location/location-tracker';
 import { ChartComponent } from '../charts/charts.component';
 import { SettingsPage } from '../settings/settings';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, HttpModule } from '@angular/http';
+import 'rxjs/add/operator/map';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
@@ -20,7 +22,7 @@ export class HomePage {
   { parkingLot: "Airline" }
   ];
   @Input() currentParkingLot: string;
-  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public locationTracker: LocationTracker, public http: Http, public chart: ChartComponent) {
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public locationTracker: LocationTracker, public http: Http, public chart: Promise<ChartComponent>) {
     //this.parkingLots.push("Binkley");
     // this.parkingLots.push({parkingLot:"Airline"});
     // this.parkingLots.push({parkingLot:"Theta Lot"});
@@ -29,7 +31,9 @@ export class HomePage {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
-    this.chart.loadData(this.currentParkingLot, headers);
+    this.chart.then(
+      data=>data.loadData(this.currentParkingLot, headers))
+      .catch(error=>console.log(error));
   }
   changeName(parkingLot: string) {
     this.currentParkingLot = parkingLot;
@@ -56,6 +60,7 @@ export class HomePage {
       .subscribe(data=> {
         console.log("success")},
         (err) => console.log("fail"));
+    this.stop();
   }
 
   stop() {
