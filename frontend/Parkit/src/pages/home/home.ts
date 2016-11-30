@@ -26,10 +26,10 @@ export class HomePage {
     // this.parkingLots.push({parkingLot:"Theta Lot"});
     // this.parkingLots.push({parkingLot:"Moody"});
     this.currentParkingLot = "Moody";
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
-    this.chart.loadData(this.currentParkingLot, headers);
+    // let headers = new Headers();
+    // headers.append('Content-Type', 'application/json');
+    // headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
+    // this.chart.loadData(this.currentParkingLot, headers);
   }
   changeName(parkingLot: string) {
     this.currentParkingLot = parkingLot;
