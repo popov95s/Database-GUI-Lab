@@ -6,6 +6,7 @@ import { SignUpPage } from '../../pages/signup/signup';
 import {Http} from '@angular/http';
 import { Headers } from '@angular/http';
 import { AlertController } from 'ionic-angular';
+import { GlobalVars } from '../globalVars';
 @Component({
     templateUrl: '../../pages/login/login.html'
     //providers: [AuthenticationApi]
@@ -13,7 +14,7 @@ import { AlertController } from 'ionic-angular';
 export class LoginPage {
     username: string;
     password: string;
-    constructor(public nav: NavController, public platform: Platform, public http: Http, public alert: AlertController) {
+    constructor(public nav: NavController, public platform: Platform, public http: Http, public alert: AlertController, public authTokenService:GlobalVars) {
     }
 
     login() {
@@ -27,6 +28,7 @@ export class LoginPage {
         this.http.post('api/login',JSON.stringify(data),{headers:headers})
         .subscribe( data => {
             this.nav.setRoot(TabsPage, data.json()['Authorization']);
+            this.authTokenService.setAuthToken(data.json()['Authorization']);
             console.log(data.json()['Authorization']);
         },
         (err) => {

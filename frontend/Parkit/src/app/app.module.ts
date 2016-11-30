@@ -15,6 +15,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { ChartsService } from '../pages/charts/chartsService/charts.service';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
+import { GlobalVars } from '../pages/globalVars';
 
 
 
@@ -48,6 +49,6 @@ import { HttpModule, JsonpModule } from '@angular/http';
     SignUpPage,
     SettingsPage
   ],
-  providers: [LocationTracker, ChartsService]
+  providers: [LocationTracker, ChartsService, GlobalVars]
 })
 export class AppModule {}

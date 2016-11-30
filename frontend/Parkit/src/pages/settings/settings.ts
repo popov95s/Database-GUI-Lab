@@ -4,6 +4,7 @@ import { Platform } from 'ionic-angular';
 import { TabsPage } from '../../pages/tabs/tabs';
 import { LoginPage } from '../login/login';
 import { Http, Headers } from '@angular/http';
+import { GlobalVars } from '../globalVars';
 
 @Component({
     templateUrl: '../../pages/settings/settings.html',
@@ -16,11 +17,11 @@ export class SettingsPage {
     parkingLot: string;
     firstName: string;
     lastName: string;
-    constructor(public nav: NavController, public platform: Platform, public http: Http){//, public authenticationApi: AuthenticationApi) {
+    constructor(public nav: NavController, public platform: Platform, public http: Http, public authTokenService:GlobalVars){//, public authenticationApi: AuthenticationApi) {
         
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
+        headers.append('Authorization', this.authTokenService.getAuthToken());
         this.http.get('http://private-2697b-parkit1.apiary-mock.com/settings',{headers: headers})
             .subscribe(data=>{
                 this.firstName=data.json()['first_name'];
@@ -38,6 +39,7 @@ export class SettingsPage {
         };
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
+         headers.append('Authorization', this.authTokenService.getAuthToken());
         this.http.put('http://private-2697b-parkit1.apiary-mock.com/settings',JSON.stringify(data),{headers:headers})
         .subscribe( data => {
             this.nav.setRoot(TabsPage);
@@ -50,6 +52,7 @@ export class SettingsPage {
           //)
     }
     signOut(){
+        this.authTokenService.setAuthToken("");
         this.nav.setRoot(LoginPage);
     }
 }

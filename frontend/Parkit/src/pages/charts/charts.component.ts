@@ -12,31 +12,31 @@ export class ChartComponent {
 	//needs service to be read in from API
 	getDataTry:any;
   percentFull: number;
-  doughnutLabels: string[];
-  doughnutData: Chart.Dataset[];
+  //doughnutLabels: string[];
+  //doughnutData: Chart.Dataset[];
 	constructor(private chartService?: ChartsService){
 		// this.getDataTry= ChartsService.makeGetRequest();
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
-    this.loadData("Binkley", headers);
+   // this.loadData("Binkley", headers);
   }
-  loadData(parkingLot? : string, headers ?: Headers ){
-    this.chartService.load(parkingLot, headers)
-      .then(data=>{
-        this.percentFull=data['percentFull'];
-        console.log(this.percentFull);
-        this.loadChart();
-      })
-		.catch(data => alert(data.json().error));
-  }
+  // loadData(parkingLot? : string, headers ?: Headers ){
+  //   this.chartService.load(parkingLot, headers)
+  //     .then(data=>{
+  //       this.percentFull=data['percentFull'];
+  //       console.log(this.percentFull);
+  //       this.loadChart();
+  //     })
+	// 	.catch(data => alert(data.json().error));
+  // }
 
-  loadChart(){
-  this.doughnutLabels = ["Full","Empty"];
-  this.doughnutData = [
+  //loadChart(){
+  doughnutLabels = ["Full","Empty"];
+  doughnutData = [
     {
       label: '# of Cars',
-      data: [this.percentFull,100-this.percentFull],
+      data: [60,100-60],
       backgroundColor: [
         'red',
         'rgba(0,255,0,100)',
@@ -48,7 +48,7 @@ export class ChartComponent {
       borderWidth: 1
     }
   ];
-}
+//}
 
  barLabels: string[] = ["9AM","10AM","11AM","12PM","1PM","2PM"];
   barData: Chart.Dataset[] = [
