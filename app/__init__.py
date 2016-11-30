@@ -49,7 +49,7 @@ def login():
 def signup():
     sign_up_info = request.get_json()
     try:
-        if sign_up_info['username'] is None or sign_up_info['password'] is None or sign_up_info['email'] is None or sign_up_info['first_name'] is None or sign_up_info['last_name'] is None or sign_up_info['parkitLot'] is None:
+        if sign_up_info['username'] is None or sign_up_info['password'] is None or sign_up_info['email'] is None or sign_up_info['first_name'] is None or sign_up_info['last_name'] is None or sign_up_info['fav_lot'] is None:
             return bad_request('No username or password provided')
     except:
         return bad_request('JSON was unable to be parsed')
@@ -61,7 +61,7 @@ def signup():
                     email = sign_up_info['email'],
                     first_name = sign_up_info['first_name'],
                     last_name = sign_up_info['last_name'],
-                    parkingLot = sign_up_info['parkingLot'])
+                    favorite_lot = sign_up_info['fav_lot'])
         db.session.add(user)
         g.current_user = user
         return jsonify({"Authorization": user.generate_auth_token()})
@@ -77,33 +77,36 @@ def forgotpass():
         return bad_request('JSON was unable to be parsed')
     user = User.query.filter_by(email = email_info['email'])
     if user is not None:
-        """email stuff"""
+        return "password"
 
 # TODO: Coordinate what methods return what errors
 @app.route('/checkin', methods=['GET', 'POST'])
 def checkin():
-    auth_token = request.headers.get('Authorization')
+    auth_token = request.headers.get('Authorization')	
     checkin_info = request.get_json()
-    user = verify_auth_token(auth_token)
+    g.current_user = User.verify_auth_token(auth_token)
     try:
-        if user is not None:
-            lot_parked = checkin_info['parkingLot']
+        if g.current_user is not None:
+	    lot_parked = checkin_info['parkingLot']
             floor_parked = checkin_info['floor']
-            new_checkin = ParkingInfo(username = user, Lot = lot_parked, floor = floor_parked)
+            new_checkin = ParkingInfo(parking_user_id = g.current_user.user_id, lot = lot_parked, floor = floor_parked)
             db.session.add(new_checkin)
+	    return "Checkin in successful"
     except:
         return bad_request("something idk could be unauthorized")
-    return unauthorized("idk some error")
+    return "doesn't work"
 
 # TODO: Not sure if this is the proper/safe way to delete user, figure out how to get rid of auth token, not sure what to return (apiary sucks)
 @app.route('/checkout', methods=['POST'])
 def checkout():
     checkout_user_token = request.headers.get('Authorization')
-    user = verify_auth_token(checkout_user_token)
+    g.current_user = User.verify_auth_token(checkout_user_token)
+    user_id1 = g.current_user.user_id
+    parking_info = ParkingInfo.query.filter_by(parking_user_id = user_id1).first()
     try:
-        if user is not None:
-            db.session.delete(user)
-            return jsonify({})
+        if g.current_user is not None:
+            db.session.delete(parking_info)
+            return "User deleted"
     except:
         return bad_request("Unable to delete")
     return unauthorized("You can't delete this user")
