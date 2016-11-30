@@ -21,3 +21,5 @@ parkitenv/
 
 # test files
 parkit.py
+
+.vagrant/
