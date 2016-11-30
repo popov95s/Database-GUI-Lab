@@ -30,7 +30,6 @@ from .models import User, Lot, ParkingInfo
 def hello():
     return "Parkit API"
 
-# TODO: add try/except blocks for the username/password retrieval from JSON
 @app.route('/login', methods=['POST'])
 def login():
     login_info = request.get_json()
@@ -60,9 +59,7 @@ def signup():
     except:
         return bad_request('JSON was unable to be parsed.')
     user = User.query.filter_by(username=sign_up_info['username']).first();
-    if user is not None:
-        return bad_request('Username already exists.')
-    else:    
+    if user is None:
         user = User(user_id = str(uuid.uuid4()),
                     username = sign_up_info['username'],
                     password = sign_up_info['password'],
@@ -73,6 +70,7 @@ def signup():
         db.session.add(user)
         g.current_user = user
         return jsonify({"Authorization": g.current_user.generate_auth_token(expiration=3600)})
+    return bad_request('Username already exists.')
 
 # TODO: figure out sending emails for resetting passwords
 @app.route('/forgotpass', methods=['GET', 'POST'])
