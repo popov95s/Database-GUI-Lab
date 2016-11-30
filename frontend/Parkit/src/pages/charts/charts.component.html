@@ -1,4 +1,4 @@
-<chart [labels]="doughnutLabels" [data]="doughnutData" type="doughnut"></chart>
-<chart [labels]="barLabels" [data]="barData" type="bar"></chart>
-
+<chart id="doughnutChart" [labels]="doughnutLabels" [data]="doughnutData"  type="doughnut"></chart>
+<!--<chart [labels]="barLabels" [data]="barData" type="bar"></chart>-->
+<button (click)="reloadData()">Reload</button>
             <!-- <pre>{{ getDataTry|json }}</pre> -->
