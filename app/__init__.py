@@ -72,7 +72,7 @@ def signup():
                     parkingLot = sign_up_info['parkingLot'])
         db.session.add(user)
         g.current_user = user
-        return jsonify({"Authorization": user.generate_auth_token()})
+        return jsonify({"Authorization": g.current_user.generate_auth_token(expiration=3600)})
 
 # TODO: figure out sending emails for resetting passwords
 @app.route('/forgotpass', methods=['GET', 'POST'])
