@@ -114,6 +114,7 @@ export class AboutPage {
    }
 
     pins(){
+
       this.addMarkers(32.8407707, -96.7826080, "Binkley " + this.binkley + " % Full", this.binkley);
       this.addMarkers(32.8463058, -96.7834326, "Airline " + this.airline + " % Full", this.airline);
       this.addMarkers(32.8469162, -96.7862244, "Law Garage " + this.law + " % Full", this.law);
@@ -128,17 +129,13 @@ export class AboutPage {
 
      this.getStats();
 
-     this.markers.push(this.addMarkers(32.8407707, -96.7826080, "Binkley " + this.binkley + " % Full", this.binkley));
-     this.markers.push(this.addMarkers(32.8463058, -96.7834326, "Airline " + this.airline + " % Full", this.airline));
-     this.markers.push(this.addMarkers(32.8469162, -96.7862244, "Law Garage " + this.law + " % Full", this.law));
-     this.markers.push(this.addMarkers(32.8414574, -96.7812195, "Moody " + this.moody + " % Full", this.moody));
-     this.markers.push(this.addMarkers(32.8397369, -96.7798080, "Mustang " + this.mustang + " % Full", this.mustang));
-     this.markers.push(this.addMarkers(32.8459015, -96.7803574, "Theta Lot " + this.theta + " % Full", this.theta));
-     this.markers.push(this.addMarkers(32.8447151, -96.7811737, "Commuter Lot " + this.commuter + " % Full", this.commuter));
-
-     for (let markerOption of this.markers){
-       console.log(markerOption);
-     }
+    //  this.markers.push(this.addMarkers(32.8407707, -96.7826080, "Binkley " + this.binkley + " % Full", this.binkley));
+    //  this.markers.push(this.addMarkers(32.8463058, -96.7834326, "Airline " + this.airline + " % Full", this.airline));
+    //  this.markers.push(this.addMarkers(32.8469162, -96.7862244, "Law Garage " + this.law + " % Full", this.law));
+    //  this.markers.push(this.addMarkers(32.8414574, -96.7812195, "Moody " + this.moody + " % Full", this.moody));
+    //  this.markers.push(this.addMarkers(32.8397369, -96.7798080, "Mustang " + this.mustang + " % Full", this.mustang));
+    //  this.markers.push(this.addMarkers(32.8459015, -96.7803574, "Theta Lot " + this.theta + " % Full", this.theta));
+    //  this.markers.push(this.addMarkers(32.8447151, -96.7811737, "Commuter Lot " + this.commuter + " % Full", this.commuter));
 
    }
 
@@ -158,7 +155,7 @@ export class AboutPage {
            this.theta=data.json()['theta_lot'];
 
            console.log("Success");
-           this.pins(); 
+           this.pins();
 
 
          },
