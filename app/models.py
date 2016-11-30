@@ -1,6 +1,7 @@
 from flask import current_app, request
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from werkzeug.security import generate_password_hash, check_password_hash
+from jose import jwt
 from app import db
 
 class Lot(db.Model):
@@ -17,9 +18,22 @@ class Lot(db.Model):
     def __repr__(self):
         return '<Lot %r>' % self.lot_name
 
+class ParkingInfo(db.Model):
+    __tablename__ = "ParkingInfo"
+    parking_id = db.Column(db.Integer, primary_key=True, autoincrement=True,  nullable=False)
+    parking_user_id = db.Column(db.String(36), db.ForeignKey('Users.user_id'), nullable=False)
+    lot = db.Column(db.String(80), nullable=False)
+    floor = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, **kwargs):
+        super(ParkingInfo, self).__init__(**kwargs)
+
+    def __repr__(self):
+        return '<ParkingID %r>' % self.parking_id
+
 class User(db.Model):
     __tablename__ = 'Users'
-    user_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    user_id = db.Column(db.String(36), primary_key=True, nullable=False)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), unique=True, nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=False)
@@ -40,7 +54,7 @@ class User(db.Model):
     def verify_auth_token(token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
-            data = s.loads(token)
+            data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
         except:
             return None
      	test =  User.query.filter_by(user_id = data['Authorization']).first() 

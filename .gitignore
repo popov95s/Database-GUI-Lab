@@ -14,4 +14,10 @@ gitSetup.sh
 *.swp
 
 # Virtual Environment
-parkitenv
+parkitenv/
+
+# environment files
+*.env
+
+# test files
+parkit.py
