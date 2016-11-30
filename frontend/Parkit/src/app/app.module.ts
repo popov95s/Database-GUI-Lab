@@ -13,6 +13,8 @@ import { ChartComponent } from '../pages/charts/charts.component';
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { SettingsPage } from '../pages/settings/settings';
 import { ChartsService } from '../pages/charts/chartsService/charts.service';
+import { FormsModule } from '@angular/forms';
+import { HttpModule, JsonpModule } from '@angular/http';
 
 
 
@@ -30,7 +32,10 @@ import { ChartsService } from '../pages/charts/chartsService/charts.service';
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    ChartModule
+    ChartModule,
+    FormsModule,
+    HttpModule,
+    JsonpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import {Camera} from 'ionic-native';
+import { Platform } from 'ionic-angular';
 
 import { NavController } from 'ionic-angular';
 
@@ -15,13 +16,12 @@ export class ContactPage {
   public floor : string;
   private new: boolean;
 
-  static get parameters() {
-      return [[Http]];
-  }
 
-  constructor(public navCtrl: NavController, private http:Http) {
 
-    //this.getCar();
+  constructor(public nav: NavController, public platform: Platform, public http: Http) {
+
+    this.getCar();
+    console.log(this.parkinglot);
 
   }
 
@@ -39,15 +39,15 @@ export class ContactPage {
 }
 
 
-ngOnit(){
-
-  if (this.getCar() != null){
-    this.new = false;
-  } else {
-
-    this.new = true;
-  }
-}
+// ngOnit(){
+//
+//   if (this.getCar() != null){
+//     this.new = false;
+//   } else {
+//
+//     this.new = true;
+//   }
+// }
 getCar(){
 
 
@@ -59,6 +59,8 @@ getCar(){
           this.parkinglot=data.json()['parkingLot'];
           this.floor=data.json()['floor'];
           this.base64Image=data.json()['imageURL'];
+          console.log("Success");
+
 
       },
       (err)=> alert("Error"));
