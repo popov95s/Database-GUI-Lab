@@ -57,7 +57,12 @@ export class ChartComponent {
       data: [100,120,150,200,150,120],
       borderWidth: 1,
       backgroundColor:[
-        'rgba(00, 72, D6, 1)'
+        'rgba(00, 114, 214, 1)',
+        'rgba(00, 114, 214, 1)',
+        'rgba(00, 114, 214, 1)',
+        'rgba(00, 114, 214, 1)',
+        'rgba(00, 114, 214, 1)',
+        'rgba(00, 114, 214, 1)'
       ]
     }
   ];

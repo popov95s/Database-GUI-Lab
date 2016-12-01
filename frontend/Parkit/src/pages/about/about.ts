@@ -4,6 +4,7 @@ import { Geolocation } from 'ionic-native';
 import { Http, Headers } from '@angular/http';
 import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarkerOptions, GoogleMapsMarker, CameraPosition } from 'ionic-native';
 import { Observable } from 'rxjs/Observable';
+import { StatusBar } from 'ionic-native';
 
 
 // ios API KEY: AIzaSyAPJVrypTj0ZaAd-xO8egPEyiUpmnt2QZs
@@ -34,6 +35,8 @@ export class AboutPage {
          this.loadMap();
 
      });
+
+     StatusBar.hide();
 
    }
 

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import {Camera} from 'ionic-native';
 import { Platform } from 'ionic-angular';
-
+import { StatusBar } from 'ionic-native';
 import { NavController } from 'ionic-angular';
 
 @Component({
@@ -22,7 +22,7 @@ export class ContactPage {
 
     this.getCar();
     console.log(this.parkinglot);
-
+    StatusBar.hide();
   }
 
   takePicture(){

@@ -5,10 +5,11 @@ import { TabsPage } from '../../pages/tabs/tabs';
 import { LoginPage } from '../login/login';
 import { Http, Headers } from '@angular/http';
 import { GlobalVars } from '../globalVars';
+import { StatusBar } from 'ionic-native';
 
 @Component({
     templateUrl: '../../pages/settings/settings.html',
-    
+
     //providers: [AuthenticationApi]
 })
 export class SettingsPage {
@@ -18,7 +19,9 @@ export class SettingsPage {
     firstName: string;
     lastName: string;
     constructor(public nav: NavController, public platform: Platform, public http: Http, public authTokenService:GlobalVars){//, public authenticationApi: AuthenticationApi) {
-        
+
+      StatusBar.hide();
+
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', this.authTokenService.getAuthToken());
@@ -27,7 +30,7 @@ export class SettingsPage {
                 this.firstName=data.json()['first_name'];
                 this.lastName=data.json()['last_name'];
                 this.parkingLot=data.json()['parkingLot'];
-            
+
             },
             (err)=> alert("Error"));
     }
@@ -46,8 +49,8 @@ export class SettingsPage {
         },
         (err) => alert("Incorrect Username or Password"));
         //this.authenticationApi.login(this.userName, this.password).subscribe(
-             //data => {      
-               //Navigate to home page          
+             //data => {
+               //Navigate to home page
              //}
           //)
     }

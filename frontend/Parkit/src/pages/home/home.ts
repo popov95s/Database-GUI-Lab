@@ -6,6 +6,7 @@ import { ChartComponent } from '../charts/charts.component';
 import { SettingsPage } from '../settings/settings';
 import { Http, Headers } from '@angular/http';
 import { GlobalVars } from '../globalVars';
+import { StatusBar } from 'ionic-native';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
@@ -22,6 +23,7 @@ export class HomePage {
   ];
   @Input() currentParkingLot: string;
   constructor(public navCtrl: NavController, public menuCtrl: MenuController, public locationTracker: LocationTracker, public http: Http, public chart: ChartComponent, public authTokenService:GlobalVars) {
+    StatusBar.hide();
     //this.parkingLots.push("Binkley");
     // this.parkingLots.push({parkingLot:"Airline"});
     // this.parkingLots.push({parkingLot:"Theta Lot"});
@@ -68,7 +70,7 @@ export class HomePage {
     var headers = new Headers();
     headers.append('Authorization', this.authTokenService.getAuthToken());
     headers.append('Content-Type', 'application/json');
-    this.http.post("http://private-2697b-parkit1.apiary-mock.com/checkout",{headers:headers}) 
+    this.http.post("http://private-2697b-parkit1.apiary-mock.com/checkout",{headers:headers})
         .subscribe(data=> {
         console.log("success")},
         (err) => console.log("fail"));;
