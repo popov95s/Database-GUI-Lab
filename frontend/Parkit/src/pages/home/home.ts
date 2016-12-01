@@ -59,7 +59,7 @@ export class HomePage {
     this.checkedIn=1;
     headers.append('Authorization', this.authTokenService.getAuthToken());
     headers.append('Content-Type', 'application/json');
-    this.http.post('http://private-2697b-parkit1.apiary-mock.com/checkin',JSON.stringify(data),{headers:headers})
+    this.http.post('https://parkitllc.me/checkin',JSON.stringify(data),{headers:headers})
       .subscribe(data=> {
         console.log("success")},
         (err) => console.log("fail"));
@@ -70,7 +70,7 @@ export class HomePage {
     var headers = new Headers();
     headers.append('Authorization', this.authTokenService.getAuthToken());
     headers.append('Content-Type', 'application/json');
-    this.http.post("http://private-2697b-parkit1.apiary-mock.com/checkout",{headers:headers})
+    this.http.post("https://parkitllc.me/checkout",{headers:headers})
         .subscribe(data=> {
         console.log("success")},
         (err) => console.log("fail"));;

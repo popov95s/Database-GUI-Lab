@@ -31,11 +31,11 @@ export class SignUpPage {
         };
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        this.http.post('http://private-2697b-parkit1.apiary-mock.com/signup',JSON.stringify(data),{headers:headers})
+        this.http.post('https://parkitllc.me/signup',JSON.stringify(data),{headers:headers})
         .subscribe( data => {
             this.nav.setRoot(TabsPage, data.json()['Authorization']);
         },
-        (err) => alert("Incorrect Username or Password"));
+        (err) => alert("Unable to Register"));
     }
 
     backToLogin() {

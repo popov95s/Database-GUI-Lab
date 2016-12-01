@@ -25,7 +25,7 @@ export class SettingsPage {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', this.authTokenService.getAuthToken());
-        this.http.get('http://private-2697b-parkit1.apiary-mock.com/settings',{headers: headers})
+        this.http.get('https://parkitllc.me/settings',{headers: headers})
             .subscribe(data=>{
                 this.firstName=data.json()['first_name'];
                 this.lastName=data.json()['last_name'];
@@ -43,7 +43,7 @@ export class SettingsPage {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
          headers.append('Authorization', this.authTokenService.getAuthToken());
-        this.http.put('http://private-2697b-parkit1.apiary-mock.com/settings',JSON.stringify(data),{headers:headers})
+        this.http.put('https://parkitllc.me/settings',JSON.stringify(data),{headers:headers})
         .subscribe( data => {
             this.nav.setRoot(TabsPage);
         },

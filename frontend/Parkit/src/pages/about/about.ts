@@ -147,7 +147,7 @@ export class AboutPage {
      let headers = new Headers();
      headers.append('Content-Type', 'application/json');
      headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
-     this.http.get('http://private-2697b-parkit1.apiary-mock.com/map',{headers: headers}).subscribe(data=>{
+     this.http.get('https://parkitllc.me/map',{headers: headers}).subscribe(data=>{
 
            this.binkley=data.json()['binkley'];
            this.moody=data.json()['moody'];
