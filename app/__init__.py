@@ -31,6 +31,54 @@ from .models import User, Lot, ParkingInfo
 def hello():
     return "Parkit API"
 
+@app.route('/checkin', methods=['POST'])
+@auth.login_required
+def checkin():
+    checkin_info = request.get_json()
+    try:
+        if checkin_info['parking_lot'] is None or checkin_info['floor'] is None:
+    		return bad_request('Check in information incomplete.')
+    except:
+        	return bad_request('JSON was unable to be parsed.')
+    if g.current_user is not None:
+    	new_checkin = ParkingInfo(parking_id=str(uuid.uuid4()), \
+    				  user_id=g.current_user.user_id, \
+    				  lot=checkin_info['parking_lot'], \
+    				  floor=checkin_info['floor'])
+        try:
+            db.session.add(new_checkin)
+        except exc.IntegrityError as e:
+            db.session.rollback()
+            return bad_request('User already checked in.')
+        return success('Check in successful.')
+    return unauthorized('Invalid credentials - no user to check in.')
+
+@app.route('/checkout', methods=['GET','DELETE'])
+@auth.login_required
+def checkout():
+    if g.current_user is not None:
+        parking_info = ParkingInfo.query.filter_by(user_id=g.current_user.user_id).first()
+        if parking_info is not None:
+            db.session.delete(parking_info)
+            return success('Check out successful.')
+        else:
+            return bad_request('User is not checked in.')
+    return unauthorized('Invalid credentials - no user to check out.')
+
+# TODO: figure out sending emails for resetting passwords
+@app.route('/forgotpass', methods=['GET', 'POST'])
+def forgotpass():
+    email_info = request.get_json()
+    try:
+        if email_info['email'] is None:
+            return bad_request('No email provided')
+    except:
+        return bad_request('JSON was unable to be parsed')
+    user = User.query.filter_by(email = email_info['email'])
+    if user is not None:
+        return "password"
+        '''email stuff'''
+
 @app.route('/login', methods=['POST'])
 def login():
     login_info = request.get_json()
@@ -72,53 +120,10 @@ def signup():
         return jsonify({"Authorization": g.current_user.generate_auth_token()})
     return bad_request('Username already exists.')
 
-# TODO: figure out sending emails for resetting passwords
-@app.route('/forgotpass', methods=['GET', 'POST'])
-def forgotpass():
-    email_info = request.get_json()
-    try:
-        if email_info['email'] is None:
-            return bad_request('No email provided')
-    except:
-        return bad_request('JSON was unable to be parsed')
-    user = User.query.filter_by(email = email_info['email'])
-    if user is not None:
-        return "password"
-        '''email stuff'''
-
-@app.route('/checkin', methods=['POST'])
+@app.route('/token', methods=['GET'])
 @auth.login_required
-def checkin():
-    checkin_info = request.get_json()
-    try:
-        if checkin_info['parking_lot'] is None or checkin_info['floor'] is None:
-    		return bad_request('Check in information incomplete.')
-    except:
-        	return bad_request('JSON was unable to be parsed.')
-    if g.current_user is not None:
-    	new_checkin = ParkingInfo(parking_id=str(uuid.uuid4()), \
-    				  user_id=g.current_user.user_id, \
-    				  lot=checkin_info['parking_lot'], \
-    				  floor=checkin_info['floor'])
-        try:
-            db.session.add(new_checkin)
-        except exc.IntegrityError as e:
-            db.session.rollback()
-            return bad_request('User already checked in.')
-        return success('Check in successful.')
-    return unauthorized('Invalid credentials - no user to check in.')
-
-@app.route('/checkout', methods=['GET','DELETE'])
-@auth.login_required
-def checkout():
-    if g.current_user is not None:
-        parking_info = ParkingInfo.query.filter_by(user_id=g.current_user.user_id).first()
-        if parking_info is not None:
-            db.session.delete(parking_info)
-            return success('Check out successful.')
-        else:
-            return bad_request('User is not checked in.')
-    return unauthorized('Invalid credentials - no user to check out.')
+def get_token():
+    return jsonify({'Authorization': g.current_user.generate_auth_token()})
 
 @auth.verify_password
 def verify_password(username_or_token, password):
@@ -136,11 +141,6 @@ def verify_password(username_or_token, password):
 @auth.error_handler
 def auth_error():
     return unauthorized('Invalid credentials - authentication error.')
-
-@app.route('/token', methods=['GET'])
-@auth.login_required
-def get_token():
-    return jsonify({'Authorization': g.current_user.generate_auth_token()})
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',debug=True)
