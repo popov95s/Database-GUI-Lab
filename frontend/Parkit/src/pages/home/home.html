@@ -24,11 +24,8 @@
 
 <chartComponent> </chartComponent>
 
-<h3>Current Latitude: {{locationTracker.lat}}</h3>
-<h3>Current Longitude: {{locationTracker.lng}}</h3>
-
-<div [ngSwitch]="checkedIn" >
-     <button ion-button *ngSwitchCase="0"  (click)="start()" color="success" block primary large> Check in</button>
+<div [ngSwitch]="checkedIn" padding id="checkin">
+     <button ion-button *ngSwitchCase="0"  (click)="start()" color="secondary" block primary large> Check in</button>
      <button ion-button *ngSwitchCase="1"  (click)="checkout()" color="danger" block primary large> Check out</button>
 </div>
 

@@ -55,7 +55,10 @@ export class ChartComponent {
     {
       label: 'Busiest hours',
       data: [100,120,150,200,150,120],
-      borderWidth: 1
+      borderWidth: 1,
+      backgroundColor:[
+        'rgba(00, 72, D6, 1)'
+      ]
     }
   ];
 
