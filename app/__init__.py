@@ -2,7 +2,7 @@ from flask import Flask, g, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
 from flask_httpauth import HTTPBasicAuth
-from .errors import bad_request, forbidden, unauthorized
+from .messages import success, bad_request, forbidden, unauthorized
 import os
 import uuid
 
@@ -105,7 +105,7 @@ def checkin():
         except exc.IntegrityError as e:
             db.session.rollback()
             return bad_request('User already checked in.')
-        return unauthorized('Successful checkin -- just need to fix messages')
+        return success('Check in successful.')
     return unauthorized('Invalid credentials - no user to check in.')
 
 @app.route('/checkout', methods=['GET','DELETE'])
@@ -115,7 +115,7 @@ def checkout():
         parking_info = ParkingInfo.query.filter_by(user_id=g.current_user.user_id).first()
         if parking_info is not None:
             db.session.delete(parking_info)
-            return unauthorized('Successfully checked out -- just need to fix messages')
+            return success('Check out successful.')
         else:
             return bad_request('User is not checked in.')
     return unauthorized('Invalid credentials - no user to check out.')

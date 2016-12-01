@@ -1,5 +1,10 @@
 from flask import jsonify
 
+def success(message):
+    response = jsonify({"error": "success", "message": message})
+    response.status_code = 200
+    return response
+
 def bad_request(message):
     response = jsonify({"error": "bad request", "message": message})
     response.status_code = 400
