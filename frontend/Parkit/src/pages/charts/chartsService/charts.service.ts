@@ -8,7 +8,7 @@ export class ChartsService {
         return [[Http]];
     }
 
-    constructor(public authTokenService:GlobalVars, private http?: Http) {
+    constructor(public authTokenService?:GlobalVars, private http?: Http) {
 
     }
     load(parkingLot?: string, headers?: Headers) {
