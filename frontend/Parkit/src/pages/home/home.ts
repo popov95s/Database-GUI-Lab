@@ -31,14 +31,14 @@ export class HomePage {
      var headers = new Headers();
     headers.append('Authorization', this.authTokenService.getAuthToken());
     headers.append('Content-Type', 'application/json');
-    
+
     this.http.get('https://parkitllc.me/settings',{headers:headers})
       .subscribe(data=>
-        { 
+        {
           this.changeName(data.json()['parkingLot']);
-
+          this.currentParkingLot = data.json()['parkingLot'];
         });
-    this.currentParkingLot = "Moody";
+
     // let headers = new Headers();
     // headers.append('Content-Type', 'application/json');
     // headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');

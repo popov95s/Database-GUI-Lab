@@ -6,6 +6,8 @@ import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarkerOptions, 
 import { Observable } from 'rxjs/Observable';
 import { StatusBar } from 'ionic-native';
 
+import { GlobalVars } from '../globalVars';
+
 
 // ios API KEY: AIzaSyAPJVrypTj0ZaAd-xO8egPEyiUpmnt2QZs
 @Component({
@@ -27,7 +29,7 @@ export class AboutPage {
  commuter: any;
 
 
-   constructor(public navCtrl: NavController, public platform: Platform, public http : Http) {
+   constructor(public navCtrl: NavController, public platform: Platform, public http : Http, public authTokenService:GlobalVars) {
 
      this.getStats();
      this.platform.ready().then(() => {
@@ -146,16 +148,16 @@ export class AboutPage {
 
      let headers = new Headers();
      headers.append('Content-Type', 'application/json');
-     headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
+     headers.append('Authorization', this.authTokenService.getAuthToken());
      this.http.get('https://parkitllc.me/map',{headers: headers}).subscribe(data=>{
 
-           this.binkley=data.json()['binkley'];
-           this.moody=data.json()['moody'];
-           this.law=data.json()['law_garage'];
-           this.airline=data.json()['airline'];
-           this.mustang=data.json()['mustang'];
-           this.commuter=data.json()['commuters_lot'];
-           this.theta=data.json()['theta_lot'];
+           this.binkley=data.json()['Binkley'];
+           this.moody=data.json()['Moody'];
+           this.law=data.json()['Law'];
+           this.airline=data.json()['Airline'];
+           this.mustang=data.json()['Mustang'];
+           this.commuter=data.json()['Commuter Lot'];
+           this.theta=data.json()['Theta Lot'];
 
            console.log("Success");
            this.pins();

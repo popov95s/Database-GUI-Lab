@@ -83,6 +83,7 @@ saveCar(){
 
 deleteCar(){
 
+
   var data = {parkingLot : this.parkinglot, floor : this.floor, imageURL : this.base64Image}
   var headers = new Headers();
   headers.append('Authorization', this.authTokenService.getAuthToken());
@@ -92,6 +93,9 @@ deleteCar(){
       console.log("success")},
       (err) => console.log("fail"));
 
+      this.floor = "";
+      this.base64Image = "";
+      this.parkinglot = "";
 }
 
 }
