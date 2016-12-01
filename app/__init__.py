@@ -65,19 +65,19 @@ def checkout():
             return bad_request('User is not checked in.')
     return unauthorized('Invalid credentials - no user to check out.')
 
-# TODO: figure out sending emails for resetting passwords
-@app.route('/forgotpass', methods=['GET', 'POST'])
-def forgotpass():
-    email_info = request.get_json()
-    try:
-        if email_info['email'] is None:
-            return bad_request('No email provided')
-    except:
-        return bad_request('JSON was unable to be parsed')
-    user = User.query.filter_by(email = email_info['email'])
-    if user is not None:
-        return "password"
-        '''email stuff'''
+# # TODO: figure out sending emails for resetting passwords
+# @app.route('/forgotpass', methods=['GET', 'POST'])
+# def forgotpass():
+#     email_info = request.get_json()
+#     try:
+#         if email_info['email'] is None:
+#             return bad_request('No email provided')
+#     except:
+#         return bad_request('JSON was unable to be parsed')
+#     user = User.query.filter_by(email = email_info['email'])
+#     if user is not None:
+#         return "password"
+#         '''email stuff'''
 
 @app.route('/login', methods=['POST'])
 def login():
