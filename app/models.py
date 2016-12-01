@@ -16,6 +16,16 @@ class Lot(db.Model):
     def __init__(self, **kwargs):
         super(Lot, self).__init__(**kwargs)
 
+    def to_json(self):
+
+        json_lot = {"lot_name": str(self.lot_name),
+                    "latitude": str(self.latitude),
+                    "longitude": str(self.longitude),
+                    "spots": self.spots,
+                    "spots_taken": self.spots_taken}
+
+        return json_lot
+
     def __repr__(self):
         return '<Lot %r>' % self.lot_name
 
