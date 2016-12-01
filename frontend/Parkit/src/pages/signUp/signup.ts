@@ -27,7 +27,7 @@ export class SignUpPage {
     signUp() {
         var data = {
             username: this.username, password: this.password,
-            email: this.email, first_name: this.firstName, last_name: this.lastName, parkingLot: this.parkingLot
+            email: this.email, first_name: this.firstName, last_name: this.lastName, fav_lot: this.parkingLot
         };
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');

@@ -42,6 +42,7 @@ export class HomePage {
   }
   openMenu() {
     this.menuCtrl.open();
+    console.log("Open");
   }
 
   closeMenu() {
