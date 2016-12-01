@@ -47,7 +47,7 @@ export class SettingsPage {
         .subscribe( data => {
             this.nav.setRoot(TabsPage);
         },
-        (err) => alert("Incorrect Username or Password"));
+        (err) => alert("Unable to Save"));
         //this.authenticationApi.login(this.userName, this.password).subscribe(
              //data => {
                //Navigate to home page

@@ -21,23 +21,22 @@ export class HomePage {
   { parkingLot: "Moody" },
   { parkingLot: "Airline" }
   ];
-  @Input() currentParkingLot: string;
+
+  currentParkingLot: string;
   constructor(public navCtrl: NavController, public menuCtrl: MenuController, public locationTracker: LocationTracker, public http: Http, public chart: ChartComponent, public authTokenService:GlobalVars) {
     StatusBar.hide();
-    //this.parkingLots.push("Binkley");
-    // this.parkingLots.push({parkingLot:"Airline"});
-    // this.parkingLots.push({parkingLot:"Theta Lot"});
-    // this.parkingLots.push({parkingLot:"Moody"});
-     var headers = new Headers();
-    headers.append('Authorization', this.authTokenService.getAuthToken());
-    headers.append('Content-Type', 'application/json');
 
-    this.http.get('https://parkitllc.me/settings',{headers:headers})
-      .subscribe(data=>
-        {
-          this.changeName(data.json()['parkingLot']);
-          this.currentParkingLot = data.json()['parkingLot'];
-        });
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', this.authTokenService.getAuthToken());
+    this.http.get('https://parkitllc.me/settings',{headers: headers})
+        .subscribe(data=>{
+
+            this.currentParkingLot=data.json()['parkingLot'];
+
+        },
+        (err)=> alert("Error"));
 
     // let headers = new Headers();
     // headers.append('Content-Type', 'application/json');
