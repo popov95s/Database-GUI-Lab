@@ -1,7 +1,6 @@
 <ion-header>
 
   <ion-navbar>
-
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -16,7 +15,7 @@
 <ion-menu [content]="content">
     <ion-list #content>
       <ion-item *ngFor='let parkingLot of parkingLots' (click)='changeName(parkingLot.parkingLot)' >
-       {{parkingLot.parkingLot}}    
+       {{parkingLot.parkingLot}}
       </ion-item>
     </ion-list>
 </ion-menu>

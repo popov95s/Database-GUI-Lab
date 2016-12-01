@@ -1,5 +1,12 @@
+<ion-header>
+  <ion-navbar>
+</ion-navbar>
+</ion-header>
 
 <ion-content>
+  <ion-card>
+
+    <ion-card-content>
 <ion-list>
   <ion-item>
     <ion-label floating>Username</ion-label>
@@ -27,16 +34,19 @@
   <ion-item>
     <ion-label floating>Favorite Parking Lot</ion-label>
         <ion-select [(ngModel)]="parkingLot">
-            <ion-option value="binkley" selected="true">Binkley</ion-option>
-            <ion-option value="airline">Airline</ion-option>
+            <ion-option value="Binkley" selected="true">Binkley</ion-option>
+            <ion-option value="Airline">Airline</ion-option>
+            <ion-option value="Theta Lot" selected="true">Theta Lot</ion-option>
+            <ion-option value="Law Garage">Law Garage</ion-option>
+            <ion-option value="Commuter Lot" selected="true">Commuter Lot</ion-option>
+            <ion-option value="Moody">Moody</ion-option>
         </ion-select>
     </ion-item>
 </ion-list>
 
+</ion-card-content>
+</ion-card>
 <div padding>
-  <button ion-button color="blue"  block (click)="signUp()">Register</button>
-</div>
-<div padding>
-  <button ion-button light  block (click)="backToLogin()">Back</button>
+  <button id="signUp" ion-button round outline (click)="signUp()">Sign Up</button>
 </div>
 </ion-content>
