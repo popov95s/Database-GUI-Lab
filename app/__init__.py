@@ -94,7 +94,7 @@ def login():
     return unauthorized('Incorrect username or password.')
 
 @app.route('/map', methods=['GET'])
-#@auth.login_required
+@auth.login_required
 def map():
     lots = Lot.query.all()
     
