@@ -1,49 +1,15 @@
-@app.route('/map', methods=['GET'])
-@auth.login_required
-def map():
-    lots = Lot.query.all()
-    return jsonify({"binkley":lots['binkley'].spots_taken, "moody":lots['moody'].spots_taken, \
-                "airline":lots['airline'].spots_taken, "mustang":lots['mustang'].spots_taken, \
-                "commuters_lot":lots['commuters_lot'].spots_taken, "theta_lot":lots['theta_lot'].spots_taken, \
-                "law_garage":lots['law_garage'].spots_taken})
-                
-@app.route('/settings', methods=['GET']
-@auth.login_required
-def settings():
-        if g.current_user is not None:
-            lot_info = ParkingInfo.query(user_id=g.current_user.user_id).first()
-            parking_lot = lot_info.lot
-            return jsonify({"first_name":g.current_user.first_name, "last_name":g.current_user.last_name, "parkingLot":parking_lot})
-
-
-@app.route('/parkinglots', methods=['GET'])
-@auth.login_required
-def parkinglots():
-    list_of_lots = Lot.query.all()
-    return jsonify([{"lot_name": "Binkley", "latitude": list_of_lots['binkley'].latitude, \
-                  "longitude": list_of_lots['binkley'].longitude, "spots": list_of_lots['binkley'].spots, \
-                  "spots_taken": list_of_lots['binkley'].spots_taken},  {"lot_name": "Airline", \
-                  "latitude": list_of_lots['airline'].latitude, "longitude": list_of_lots['airline'].longitude, \
-                  "spots": list_of_lots['airline'].spots, "spots_taken": list_of_lots['airline'].spots_taken}, \
-                  {"lot_name": "Law", "latitude": list_of_lots['law'].latitude, "longitude": list_of_lots['law'].longitude, \
-                  "spots": list_of_lots['law'].spots, "spots_taken": list_of_lots['law'].spots_taken},  \
-                  {"lot_name": "Moody", "latitude": list_of_lots['moody'].latitude, "longitude": list_of_lots['moody'].longitude, \
-                  "spots": list_of_lots['moody'].spots, "spots_taken": list_of_lots['moody'].spots_taken}, \
-                  {"lot_name": "Mustang", "latitude": list_of_lots['mustang'].latitude, "longitude": list_of_lots['mustang'].longitude, \
-                  "spots": list_of_lots['mustang'].spots, "spots_taken": list_of_lots['mustang'].spots_taken}, \
-                  {"lot_name": "Theta Lot", "latitude": list_of_lots['theta_lot'].latitude, "longitude": list_of_lots['theta_lot'].longitude, \
-                  "spots": list_of_lots['theta_lot'].spots, "spots_taken": list_of_lots['theta_lot'].spots_taken}, {"lot_name": "Commuter Lot", \
-                  "latitude": list_of_lots['commuter_lot'].latitude, "longitude": list_of_lots['commuter_lot'].longitude, \
-                  "spots": list_of_lots['commuter_lot'].spots, "spots_taken": list_of_lots['commuter_lot'].spots_taken}])
-
-@app.route('/mycar', methods=['GET'])
+@app.route('/mycar', methods=['POST'])
 @auth.login_required
 def mycar():
     if g.current_user is not None:
-        car_info = ParkingInfo.query.filter_by(user_id=g.current_user.user_id).first()
-        if car_info is not None:
-            return jsonify({"parkingLot":car_info.lot, "floor":car_info.floor, "imageURL": ""})
-        else:
-            return bad_request("User is not checked in")
-    else:
-        return unauthorized('Invalid credentials')
+        parking_info = ParkingInfo.query.filter_by(user_id = g.current.user_id).first()
+        if parking_info is not None:
+            car_info = MyCarInfo.query.filter_by(parking_info.parking_id)
+            if car_info is not None:    
+                response = {"parkingLot": str(parking_info.parking_lot), 
+                            "floor": str(parking_info.floor), 
+                            "imageURL": str(car_info.imageURL)}
+                return jsonify(response)
+            return bad_request("No image")
+        return bad_request("User not checked in")
+    return unauthorized('Invalid credentials - no user for which to get setting')
