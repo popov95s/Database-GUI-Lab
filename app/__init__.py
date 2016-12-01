@@ -93,6 +93,17 @@ def login():
         return jsonify({'Authorization': g.current_user.generate_auth_token()})
     return unauthorized('Incorrect username or password.')
 
+@app.route('/map', methods=['GET'])
+#@auth.login_required
+def map():
+    lots = Lot.query.all()
+    
+    response = {}
+    for lot in lots:
+        response[str(lot.lot_name)] = lot.spots_taken
+
+    return jsonify(response)
+
 @app.route('/signup', methods=['POST'])
 def signup():
     sign_up_info = request.get_json()
