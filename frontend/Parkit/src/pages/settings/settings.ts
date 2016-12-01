@@ -53,6 +53,6 @@ export class SettingsPage {
     }
     signOut(){
         this.authTokenService.setAuthToken("");
-        this.nav.setRoot(LoginPage);
+        this.nav.parent.parent.setRoot(LoginPage);
     }
 }
