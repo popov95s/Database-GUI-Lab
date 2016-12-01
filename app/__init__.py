@@ -128,8 +128,7 @@ def settings():
                 if setting_info['first_name'] is None or \
                    setting_info['last_name'] is None or \
                    setting_info['parkingLot'] is None or \
-                   setting_info['password'] is None or \
-                   setting_info['location'] is None:
+                   setting_info['password'] is None:
                     return bad_request('Incomplete settings information.')
             except:
                 return bad_request('JSON was unable to be parsed.')
