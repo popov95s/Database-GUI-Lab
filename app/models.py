@@ -3,6 +3,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from werkzeug.security import generate_password_hash, check_password_hash
 from jose import jwt
 from app import db
+from datetime import datetime, timedelta
 
 class Lot(db.Model):
     __tablename__ = 'Lots'
@@ -21,7 +22,7 @@ class Lot(db.Model):
 class ParkingInfo(db.Model):
     __tablename__ = "ParkingInfo"
     parking_id = db.Column(db.Integer, primary_key=True, autoincrement=True,  nullable=False)
-    parking_user_id = db.Column(db.String(36), db.ForeignKey('Users.user_id'), nullable=False)
+    user_id = db.Column(db.String(36), db.ForeignKey('Users.user_id'), nullable=False, unique=True)
     lot = db.Column(db.String(80), nullable=False)
     floor = db.Column(db.Integer, nullable=False)
 
@@ -41,12 +42,13 @@ class User(db.Model):
     last_name = db.Column(db.String(80), nullable=False) 
     favorite_lot = db.Column(db.String(80))
     confirmed = db.Column(db.Boolean, default=False)
-    parking_info = db.relationship('ParkingInfo', backref='User')
+    parking_info = db.relationship('ParkingInfo')
     
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
 
-    def generate_auth_token(self, expiration):
+    def generate_auth_token(self):
+        expiration = datetime.now() + timedelta(hours=1)
         token = jwt.encode({'id': self.user_id, 'exp': expiration}, current_app.config['SECRET_KEY'], algorithm='HS256')
         return token
     
@@ -61,13 +63,13 @@ class User(db.Model):
     @property
     def password(self):
         raise AttributeError('Password is not a readable attribute.')
-    
+
     @password.setter
     def password(self, password):
         self.password_hash = generate_password_hash(password)
-    
+
     def verify_password(self, password):
-            return check_password_hash(self.password_hash, password)
-    
+        return check_password_hash(self.password_hash, password)
+
     def __repr__(self):
-            return '<User %r>' % self.username
+        return '<User %r>' % self.username

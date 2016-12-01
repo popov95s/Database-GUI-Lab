@@ -1,5 +1,6 @@
 from flask import Flask, g, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import exc
 from flask_httpauth import HTTPBasicAuth
 from .errors import bad_request, forbidden, unauthorized
 import os
@@ -41,11 +42,10 @@ def login():
     user = User.query.filter_by(username=login_info['username']).first()
     if user is not None and user.verify_password(login_info['password']):
         g.current_user = user
-        return jsonify({'Authorization': g.current_user.generate_auth_token(expiration=3600)})
+        return jsonify({'Authorization': g.current_user.generate_auth_token()})
     return unauthorized('Incorrect username or password.')
 
-# TODO: add a default return value with appropriate HTTP status code 
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/signup', methods=['POST'])
 def signup():
     sign_up_info = request.get_json()
     try:
@@ -54,8 +54,8 @@ def signup():
            sign_up_info['email'] is None or \
            sign_up_info['first_name'] is None or \
            sign_up_info['last_name'] is None or \
-           sign_up_info['parkingLot'] is None:
-            return bad_request('Incomplete information.')
+           sign_up_info['fav_lot'] is None:
+            return bad_request('Incomplete signup information.')
     except:
         return bad_request('JSON was unable to be parsed.')
     user = User.query.filter_by(username=sign_up_info['username']).first();
@@ -66,10 +66,10 @@ def signup():
                     email = sign_up_info['email'],
                     first_name = sign_up_info['first_name'],
                     last_name = sign_up_info['last_name'],
-                    parkingLot = sign_up_info['parkingLot'])
+                    favorite_lot = sign_up_info['fav_lot'])
         db.session.add(user)
         g.current_user = user
-        return jsonify({"Authorization": g.current_user.generate_auth_token(expiration=3600)})
+        return jsonify({"Authorization": g.current_user.generate_auth_token()})
     return bad_request('Username already exists.')
 
 # TODO: figure out sending emails for resetting passwords
@@ -83,36 +83,42 @@ def forgotpass():
         return bad_request('JSON was unable to be parsed')
     user = User.query.filter_by(email = email_info['email'])
     if user is not None:
-        """email stuff"""
+        return "password"
+        '''email stuff'''
 
-# TODO: Coordinate what methods return what errors
-@app.route('/checkin', methods=['GET', 'POST'])
+@app.route('/checkin', methods=['POST'])
+@auth.login_required
 def checkin():
-    auth_token = request.headers.get('Authorization')
     checkin_info = request.get_json()
-    user = verify_auth_token(auth_token)
     try:
-        if user is not None:
-            lot_parked = checkin_info['parkingLot']
-            floor_parked = checkin_info['floor']
-            new_checkin = ParkingInfo(username = user, Lot = lot_parked, floor = floor_parked)
+        if checkin_info['parking_lot'] is None or checkin_info['floor'] is None:
+    		return bad_request('Check in information incomplete.')
+    except:
+        	return bad_request('JSON was unable to be parsed.')
+    if g.current_user is not None:
+    	new_checkin = ParkingInfo(parking_id=str(uuid.uuid4()), \
+    				  user_id=g.current_user.user_id, \
+    				  lot=checkin_info['parking_lot'], \
+    				  floor=checkin_info['floor'])
+        try:
             db.session.add(new_checkin)
-    except:
-        return bad_request("something idk could be unauthorized")
-    return unauthorized("idk some error")
+        except exc.IntegrityError as e:
+            db.session.rollback()
+            return bad_request('User already checked in.')
+        return unauthorized('Successful checkin -- just need to fix messages')
+    return unauthorized('Invalid credentials - no user to check in.')
 
-# TODO: Not sure if this is the proper/safe way to delete user, figure out how to get rid of auth token, not sure what to return (apiary sucks)
-@app.route('/checkout', methods=['POST'])
+@app.route('/checkout', methods=['GET','DELETE'])
+@auth.login_required
 def checkout():
-    checkout_user_token = request.headers.get('Authorization')
-    user = verify_auth_token(checkout_user_token)
-    try:
-        if user is not None:
-            db.session.delete(user)
-            return jsonify({})
-    except:
-        return bad_request("Unable to delete")
-    return unauthorized("You can't delete this user")
+    if g.current_user is not None:
+        parking_info = ParkingInfo.query.filter_by(user_id=g.current_user.user_id).first()
+        if parking_info is not None:
+            db.session.delete(parking_info)
+            return unauthorized('Successfully checked out -- just need to fix messages')
+        else:
+            return bad_request('User is not checked in.')
+    return unauthorized('Invalid credentials - no user to check out.')
 
 @auth.verify_password
 def verify_password(username_or_token, password):
@@ -134,7 +140,7 @@ def auth_error():
 @app.route('/token', methods=['GET'])
 @auth.login_required
 def get_token():
-    return jsonify({'Authorization': g.current_user.generate_auth_token(expiration=3600)})
+    return jsonify({'Authorization': g.current_user.generate_auth_token()})
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',debug=True)
