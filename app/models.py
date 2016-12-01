@@ -34,13 +34,26 @@ class ParkingInfo(db.Model):
     parking_id = db.Column(db.Integer, primary_key=True, autoincrement=True,  nullable=False)
     user_id = db.Column(db.String(36), db.ForeignKey('Users.user_id'), nullable=False, unique=True)
     lot = db.Column(db.String(80), nullable=False)
-    floor = db.Column(db.Integer, nullable=False)
+    floor = db.Column(db.Integer, nullable=False)i
+    car_info = db.relationship('MyCarInfo')
 
     def __init__(self, **kwargs):
         super(ParkingInfo, self).__init__(**kwargs)
 
     def __repr__(self):
         return '<ParkingID %r>' % self.parking_id
+
+class MyCarInfo(db.Model):
+    __tablename__ = "MyCarInfo"
+    car_id = db.Column(db.Integer, primary_key=True, autoincrement=True,  nullable=False)
+    car_parking_id = db.Column(db.Integer, db.ForeignKey('ParkingInfo.parking_id'), nullable=False, unique=True)
+    imageURL= db.Column(db.String(255), nullable=False)
+
+    def __init__(self, **kwargs):
+	super(MyCarInfo, self).__init__(**kwargs)
+    
+    def __repr__(self):
+	return <'CarId %r>' % self.parking_id
 
 class User(db.Model):
     __tablename__ = 'Users'
