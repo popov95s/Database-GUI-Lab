@@ -30,10 +30,10 @@ export class LoginPage {
         headers.append("Access-Control-Allow-Headers", "x-requested-with, Content-Type, origin, authorization, accept, client-security-token");
         headers.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
         headers.append("Access-Control-Max-Age", "1000");
-        this.http.post('https://parkitllc.me/login',JSON.stringify(data),{headers:headers})
+        this.http.post('api/login',JSON.stringify(data),{headers:headers})
         .subscribe( data => {
             this.nav.setRoot(TabsPage, data.json()['Authorization']);
-            this.authTokenService.setAuthToken(data.json()['Authorization']);
+            this.authTokenService.setAuthToken("Bearer " + data.json()['Authorization']);
             console.log(data.json()['Authorization']);
         },
         (err) => {

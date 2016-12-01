@@ -4,6 +4,7 @@ import {Camera} from 'ionic-native';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 import { NavController } from 'ionic-angular';
+import { GlobalVars } from '../globalVars';
 
 @Component({
   selector: 'page-contact',
@@ -18,7 +19,7 @@ export class ContactPage {
 
 
 
-  constructor(public nav: NavController, public platform: Platform, public http: Http) {
+  constructor(public nav: NavController, public platform: Platform, public http: Http, public authTokenService:GlobalVars) {
 
     this.getCar();
     console.log(this.parkinglot);
@@ -53,7 +54,7 @@ getCar(){
 
   let headers = new Headers();
   headers.append('Content-Type', 'application/json');
-  headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
+  headers.append('Authorization', this.authTokenService.getAuthToken());
   this.http.get('http://private-2697b-parkit1.apiary-mock.com/mycar',{headers: headers})
       .subscribe(data=>{
           this.parkinglot=data.json()['parkingLot'];
@@ -71,7 +72,7 @@ saveCar(){
 
   var data = {parkingLot : this.parkinglot, floor : this.floor, imageURL : this.base64Image}
   var headers = new Headers();
-  headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
+  headers.append('Authorization', this.authTokenService.getAuthToken());
   headers.append('Content-Type', 'application/json');
   this.http.post('http://private-2697b-parkit1.apiary-mock.com/savecar',JSON.stringify(data),{headers:headers})
     .subscribe(data=> {
@@ -84,7 +85,7 @@ deleteCar(){
 
   var data = {parkingLot : this.parkinglot, floor : this.floor, imageURL : this.base64Image}
   var headers = new Headers();
-  headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
+  headers.append('Authorization', this.authTokenService.getAuthToken());
   headers.append('Content-Type', 'application/json');
   this.http.post('http://private-2697b-parkit1.apiary-mock.com/deletecar',JSON.stringify(data),{headers:headers})
     .subscribe(data=> {

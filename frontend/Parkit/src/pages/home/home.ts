@@ -28,6 +28,16 @@ export class HomePage {
     // this.parkingLots.push({parkingLot:"Airline"});
     // this.parkingLots.push({parkingLot:"Theta Lot"});
     // this.parkingLots.push({parkingLot:"Moody"});
+     var headers = new Headers();
+    headers.append('Authorization', this.authTokenService.getAuthToken());
+    headers.append('Content-Type', 'application/json');
+    
+    this.http.get('https://parkitllc.me/settings',{headers:headers})
+      .subscribe(data=>
+        { 
+          this.changeName(data.json()['parkingLot']);
+
+        });
     this.currentParkingLot = "Moody";
     // let headers = new Headers();
     // headers.append('Content-Type', 'application/json');
