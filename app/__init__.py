@@ -104,6 +104,15 @@ def map():
 
     return jsonify(response)
 
+@app.route('/parkinglots', methods=['GET'])
+#@auth.login_required
+def get_lots():
+    lots = Lot.query.all()
+
+    response = [lot.to_json() for lot in lots]
+
+    return jsonify(response)
+
 @app.route('/settings', methods=['GET', 'PUT'])
 @auth.login_required
 def settings():
