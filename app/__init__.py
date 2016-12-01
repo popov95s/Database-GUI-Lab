@@ -104,6 +104,40 @@ def map():
 
     return jsonify(response)
 
+@app.route('/settings', methods=['GET', 'PUT'])
+@auth.login_required
+def settings():
+    if g.current_user is not None:
+        if request.method == 'GET':
+            response = {"first_name": str(g.current_user.first_name),
+                        "last_name": str(g.current_user.last_name),
+                        "parkingLot": str(g.current_user.favorite_lot)}
+            return jsonify(response)
+        elif request.method == 'PUT':
+            setting_info = request.get_json()
+            try:
+                if setting_info['first_name'] is None or \
+                   setting_info['last_name'] is None or \
+                   setting_info['parkingLot'] is None or \
+                   setting_info['password'] is None or \
+                   setting_info['location'] is None:
+                    return bad_request('Incomplete settings information.')
+            except:
+                return bad_request('JSON was unable to be parsed.')
+            
+            g.current_user.first_name = setting_info['first_name']
+            g.current_user.last_name = setting_info['last_name']
+            g.current_user.favorite_lot = setting_info['parkingLot']
+            g.current_user.password = setting_info['password']
+            
+            try:
+                db.session.add(g.current_user)
+            except exc.IntegrityError as e:
+                db.session.rollback()
+                return bad_request('Settings were unable to be updated.')
+            return success('Settings updated.')
+    return unauthorized('Invalid credentials - no user for which to get settings')
+
 @app.route('/signup', methods=['POST'])
 def signup():
     sign_up_info = request.get_json()
