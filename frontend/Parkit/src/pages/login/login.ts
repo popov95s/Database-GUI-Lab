@@ -7,6 +7,8 @@ import {Http} from '@angular/http';
 import { Headers } from '@angular/http';
 import { AlertController } from 'ionic-angular';
 import { GlobalVars } from '../globalVars';
+import { StatusBar } from 'ionic-native';
+
 @Component({
     templateUrl: '../../pages/login/login.html'
     //providers: [AuthenticationApi]
@@ -15,6 +17,9 @@ export class LoginPage {
     username: string;
     password: string;
     constructor(public nav: NavController, public platform: Platform, public http: Http, public alert: AlertController, public authTokenService:GlobalVars) {
+      StatusBar.overlaysWebView(true); // let status bar overlay webview
+      StatusBar.styleLightContent();
+      StatusBar.backgroundColorByHexString('#ffffff'); // set status bar to white
     }
 
     login() {

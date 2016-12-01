@@ -1,5 +1,12 @@
+
+<ion-header id="header"> </ion-header>
 <ion-content>
- <img src="http://i66.tinypic.com/4v3ju9.jpg" height="50%" width="100%">
+
+  <img id="image"src="http://i66.tinypic.com/4v3ju9.jpg" height="55%" width="100%">
+
+  <ion-card>
+
+    <ion-card-content>
 <ion-list>
   <ion-item>
     <ion-label floating>Username</ion-label>
@@ -13,10 +20,17 @@
 
 </ion-list>
 
-<div padding>
-  <button ion-button color="blue" block  (click)="login()">Sign In</button>
+  </ion-card-content>
+</ion-card>
+
+<div padding id="buttons">
+  <button id="signIn" ion-button round outline (click)="login()">Sign In</button>
 </div>
-<div padding>
-  <button ion-button color="danger"  block (click)="signUp()">Register</button>
+<div>
+  <label id="label" type="text">Don't have an account yet? </label>
 </div>
+<div>
+  <button id="button" ion-button color="danger"  block (click)="signUp()">Register</button>
+</div>
+
 </ion-content>
