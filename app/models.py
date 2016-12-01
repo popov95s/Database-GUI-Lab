@@ -29,12 +29,24 @@ class Lot(db.Model):
     def __repr__(self):
         return '<Lot %r>' % self.lot_name
 
+class MyCarInfo(db.Model):
+    __tablename__ = "MyCarInfo"
+    car_id = db.Column(db.Integer, primary_key=True, autoincrement=True,  nullable=False)
+    parking_id = db.Column(db.String(36), db.ForeignKey('ParkingInfo.parking_id'), nullable=False, unique=True)
+    imageURL= db.Column(db.String(255), nullable=False)
+
+    def __init__(self, **kwargs):
+	super(MyCarInfo, self).__init__(**kwargs)
+    
+    def __repr__(self):
+	return '<MyCarId %r>' % self.parking_id
+
 class ParkingInfo(db.Model):
     __tablename__ = "ParkingInfo"
-    parking_id = db.Column(db.Integer, primary_key=True, autoincrement=True,  nullable=False)
+    parking_id = db.Column(db.String(36), primary_key=True, nullable=False)
     user_id = db.Column(db.String(36), db.ForeignKey('Users.user_id'), nullable=False, unique=True)
     lot = db.Column(db.String(80), nullable=False)
-    floor = db.Column(db.Integer, nullable=False)i
+    floor = db.Column(db.Integer, nullable=False)
     car_info = db.relationship('MyCarInfo')
 
     def __init__(self, **kwargs):
@@ -42,18 +54,6 @@ class ParkingInfo(db.Model):
 
     def __repr__(self):
         return '<ParkingID %r>' % self.parking_id
-
-class MyCarInfo(db.Model):
-    __tablename__ = "MyCarInfo"
-    car_id = db.Column(db.Integer, primary_key=True, autoincrement=True,  nullable=False)
-    car_parking_id = db.Column(db.Integer, db.ForeignKey('ParkingInfo.parking_id'), nullable=False, unique=True)
-    imageURL= db.Column(db.String(255), nullable=False)
-
-    def __init__(self, **kwargs):
-	super(MyCarInfo, self).__init__(**kwargs)
-    
-    def __repr__(self):
-	return <'CarId %r>' % self.parking_id
 
 class User(db.Model):
     __tablename__ = 'Users'
