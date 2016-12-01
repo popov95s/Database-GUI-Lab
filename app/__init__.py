@@ -100,7 +100,7 @@ def map():
     
     response = {}
     for lot in lots:
-        response[str(lot.lot_name)] = lot.spots_taken
+        response[str(lot.lot_name)] = str(int(100 * (float(lot.spots_taken) / float(lot.spots))))
 
     return jsonify(response)
 
