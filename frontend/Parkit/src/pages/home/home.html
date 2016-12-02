@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title  class="center">{{currentParkingLot}}</ion-title>
+    <ion-buttons end>
+      <button (click)="openSettings()"><ion-icon name="settings"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-menu [content]="content">
+    <ion-list #content>
+      <ion-item *ngFor='let parkingLot of parkingLots' (click)='changeName(parkingLot.parkingLot)' >
+       {{parkingLot.parkingLot}}
+      </ion-item>
+    </ion-list>
+</ion-menu>
+
+<ion-content padding>
+
+<chartComponent> </chartComponent>
+
+<div [ngSwitch]="checkedIn" padding id="checkin">
+     <button ion-button *ngSwitchCase="0"  (click)="start()" color="secondary" block primary large> Check in</button>
+     <button ion-button *ngSwitchCase="1"  (click)="checkout()" color="danger" block primary large> Check out</button>
+</div>
+
+
+</ion-content>

@@ -1,0 +1,36 @@
+
+<ion-header id="header"> </ion-header>
+<ion-content>
+
+  <img id="image"src="http://i66.tinypic.com/4v3ju9.jpg" height="50%" width="100%">
+
+  <ion-card>
+
+    <ion-card-content>
+<ion-list>
+  <ion-item>
+    <ion-label floating>Username</ion-label>
+    <ion-input [(ngModel)]="username" type="text" value=""></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Password</ion-label>
+    <ion-input [(ngModel)]="password"  type="password" value=""></ion-input>
+  </ion-item>
+
+</ion-list>
+
+  </ion-card-content>
+</ion-card>
+
+<div padding id="buttons">
+  <button id="signIn" ion-button round outline (click)="login()">Sign In</button>
+</div>
+<div>
+  <label id="label" type="text">Don't have an account yet? </label>
+</div>
+<div>
+  <button id="button" ion-button color="danger"  block (click)="signUp()">Register</button>
+</div>
+
+</ion-content>

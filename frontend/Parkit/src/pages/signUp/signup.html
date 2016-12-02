@@ -1,0 +1,54 @@
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      
+<ion-list>
+  <ion-item>
+    <ion-label floating>Username</ion-label>
+    <ion-input [(ngModel)]="username" type="text" value=""></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Password</ion-label>
+    <ion-input [(ngModel)]="password"  type="password" value=""></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>E-mail</ion-label>
+    <ion-input [(ngModel)]="email"  type="email" value=""></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>First name</ion-label>
+    <ion-input [(ngModel)]="firstName"  type="text" value=""></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Last name</ion-label>
+    <ion-input [(ngModel)]="lastName"  type="text" value=""></ion-input>
+  </ion-item>
+  <br>
+  <ion-item>
+    <ion-label floating>Favorite Parking Lot</ion-label>
+        <ion-select [(ngModel)]="parkingLot">
+            <ion-option value="Binkley" selected="true">Binkley</ion-option>
+            <ion-option value="Airline">Airline</ion-option>
+            <ion-option value="Theta Lot" selected="true">Theta Lot</ion-option>
+            <ion-option value="Law Garage">Law Garage</ion-option>
+            <ion-option value="Commuter Lot" selected="true">Commuter Lot</ion-option>
+            <ion-option value="Moody">Moody</ion-option>
+        </ion-select>
+    </ion-item>
+</ion-list>
+
+</ion-card-content>
+</ion-card>
+<div>
+  <button id="signUp" ion-button round outline (click)="signUp()">Sign Up</button>
+</div>
+
+<div>
+  <label id="label1" type="text">Already have an Account? </label>
+</div>
+<div>
+  <button id="button1" ion-button color="danger"  block (click)="backToLogin()">Login</button>
+</div>
+</ion-content>

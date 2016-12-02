@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      My Car
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+<ion-card>
+
+  <ion-card-content>
+    <ion-item>
+      <ion-label fixed>Parking Lot</ion-label>
+      <ion-input [(ngModel)]="parkinglot" type="text" value="parkinglot"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Floor</ion-label>
+      	<ion-input [(ngModel)]="floor" type="text" value="floor"></ion-input>
+    </ion-item>
+    <img [src]="base64Image" *ngIf="base64Image" />
+    <button ion-button outline block color="standard" (click)="takePicture()">Take Picture</button>
+  </ion-card-content>
+</ion-card>
+
+
+<div padding>
+<button ion-button outline block color="secondary" (click)="saveCar()">Save</button>
+<button ion-button outline block color="danger" (click)="deleteCar()" id="deleteButton">Delete</button>
+</div>
+
+
+
+
+
+</ion-content>
