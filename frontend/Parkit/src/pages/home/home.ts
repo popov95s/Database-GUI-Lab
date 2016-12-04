@@ -35,8 +35,7 @@ export class HomePage {
 
             this.currentParkingLot=data.json()['parkingLot'];
 
-        },
-        (err)=> alert("Error"));
+        });
 
     // let headers = new Headers();
     // headers.append('Content-Type', 'application/json');
