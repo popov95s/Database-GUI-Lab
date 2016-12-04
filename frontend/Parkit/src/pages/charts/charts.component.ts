@@ -49,12 +49,11 @@ export class ChartComponent {
           ],
           borderWidth: 1
        }];
-       console.log(data);
+       console.log(tempDoughnutData[0]);
        this.doughnutData=tempDoughnutData;
+    this.changeDoughnutData(tempDoughnutData);
       }
       );
-    console.log(this.doughnutData[0]);
-    
     
     // this.chartService.load("Binkley",headers)
     //   .then(data=>{
@@ -62,6 +61,11 @@ export class ChartComponent {
     //     console.log(this.percentFull);
     //   })
 		// .catch(data => alert(data.json().error));
+  }
+  changeDoughnutData(data:any){
+    this.doughnutData=data;
+    
+    console.log(this.doughnutData[0]);
   }
   loadChart(){
   this.doughnutLabels = ["Full","Empty"];
