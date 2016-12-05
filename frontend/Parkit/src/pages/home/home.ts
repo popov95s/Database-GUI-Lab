@@ -22,15 +22,53 @@ export class HomePage {
   { parkingLot: "Moody" },
   { parkingLot: "Airline" }
   ];
+  loadedChart: boolean;
   @Input() currentParkingLot: string;
-  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public locationTracker: LocationTracker, public http: Http){//, public chart: Promise<ChartComponent>) {
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public locationTracker: LocationTracker, public http: Http, public chart: ChartComponent){//, public chart: Promise<ChartComponent>) {
     //this.parkingLots.push("Binkley");
     // this.parkingLots.push({parkingLot:"Airline"});
     // this.parkingLots.push({parkingLot:"Theta Lot"});
     // this.parkingLots.push({parkingLot:"Moody"});
     this.currentParkingLot = "Moody";
+    this.loadedChart=false;
     
   }
+  ngOnInit(){
+    
+    var bodyData= {parkingLot:'Binkley'};
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'LongTokenOfRandomUniqueCharacters');
+     this.http.get('http://private-2697b-parkit1.apiary-mock.com/home', { body: bodyData, headers: headers })
+                .subscribe(
+      data=>{
+        var tempDoughnutData= [
+       {
+          label: '# of Cars',
+          data: [data.json()['percentFull'],100-data.json()['percentFull']],
+          backgroundColor: [
+            'red',
+            'rgba(0,255,0,100)',
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)'
+          ],
+          borderWidth: 1
+       }];
+       console.log(tempDoughnutData[0]);
+       
+       this.chart.loadData(tempDoughnutData);
+       this.showDelay();
+       this.loadedChart=true;
+      }
+      );
+    
+  }
+  showDelay() { }
+    bar() {
+        setTimeout(() => this.showDelay(), 250);
+    }
   changeName(parkingLot: string) {
     this.currentParkingLot = parkingLot;
   }

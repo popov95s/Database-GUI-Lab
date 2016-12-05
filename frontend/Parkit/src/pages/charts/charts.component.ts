@@ -16,6 +16,12 @@ export class ChartComponent {
 		// this.getDataTry= ChartsService.makeGetRequest();
     this.loadChart();
   }
+  ngOnInit(){
+    this.reloadData();
+  }
+  ngOnChanges(){
+    this.reloadData();
+  }
   // loadData(parkingLot? : string, headers ?: Headers ){
   //   this.chartService.load(parkingLot, headers)
   //     .then(data=>{
@@ -66,6 +72,9 @@ export class ChartComponent {
     this.doughnutData=data;
     
     console.log(this.doughnutData[0]);
+  }
+  loadData(data: any){
+    this.doughnutData=data;
   }
   loadChart(){
   this.doughnutLabels = ["Full","Empty"];

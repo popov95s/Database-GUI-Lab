@@ -22,9 +22,10 @@
 </ion-menu>
 
 <ion-content padding>
-
+<div *ngIf="loadedChart">
 <chartComponent> </chartComponent>
-
+</div>
+<div *ngIf="!loadedChart">Loading</div>
 <h3>Current Latitude: {{locationTracker.lat}}</h3>
 <h3>Current Longitude: {{locationTracker.lng}}</h3>
 
