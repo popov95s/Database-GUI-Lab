@@ -1,3 +1,3 @@
 # Parkit
 
-A cross-platform mobile application to aleve students' parking issues on campus. 
+A cross-platform mobile application to alleviate students' parking issues on campus. 
